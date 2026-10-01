@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "lbf": {
+      "type": "http",
+      "url": "https://lbf-reporting-platform.vercel.app/api/mcp/mcp",
+      "bearer_token_env_var": "LBF_API_KEY"
+    }
+  }
+}

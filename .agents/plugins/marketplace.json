@@ -1,0 +1,12 @@
+{
+  "name": "lbf",
+  "interface": { "displayName": "Let's Be Frank" },
+  "plugins": [
+    {
+      "name": "lbf",
+      "source": { "source": "local", "path": "./plugins/lbf" },
+      "policy": { "installation": "AVAILABLE", "authentication": "ON_INSTALL" },
+      "category": "Productivity"
+    }
+  ]
+}

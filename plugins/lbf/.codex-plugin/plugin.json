@@ -1,0 +1,16 @@
+{
+  "name": "lbf",
+  "version": "1.0.0",
+  "description": "Drive the Let's Be Frank reporting platform: client data, reports, tasks and the content planner.",
+  "author": { "name": "Atab" },
+  "homepage": "https://lbf-reporting-platform.vercel.app",
+  "skills": "./skills/",
+  "mcpServers": "./codex.mcp.json",
+  "interface": {
+    "displayName": "LBF Platform",
+    "shortDescription": "Let's Be Frank client data, reports, tasks and planner",
+    "developerName": "Atab",
+    "category": "Productivity",
+    "defaultPrompt": ["List my LBF clients", "How did my clients do last month?"]
+  }
+}
