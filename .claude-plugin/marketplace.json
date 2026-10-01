@@ -1,0 +1,12 @@
+{
+  "name": "lbf",
+  "owner": { "name": "Atab" },
+  "metadata": { "description": "Let's Be Frank reporting platform plugins" },
+  "plugins": [
+    {
+      "name": "lbf",
+      "source": "./plugins/lbf",
+      "description": "Drive the Let's Be Frank reporting platform from Claude Code: client data, reports, tasks and the content planner."
+    }
+  ]
+}

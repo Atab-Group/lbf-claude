@@ -1,0 +1,19 @@
+{
+  "$schema": "https://anthropic.com/claude-code/plugin.schema.json",
+  "name": "lbf",
+  "displayName": "LBF Platform",
+  "description": "Drive the Let's Be Frank reporting platform from Claude Code: client data, reports, tasks and the content planner.",
+  "author": { "name": "Atab" },
+  "homepage": "https://lbf-reporting-platform.vercel.app",
+  "repository": "https://github.com/Atab-Group/lbf-claude",
+  "keywords": ["lbf", "reporting", "social-media"],
+  "userConfig": {
+    "api_key": {
+      "type": "string",
+      "title": "LBF platform key",
+      "description": "Your personal key from the platform: My settings, Connect your Claude. It starts with lbf_.",
+      "sensitive": true,
+      "required": true
+    }
+  }
+}
