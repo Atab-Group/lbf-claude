@@ -46,7 +46,7 @@ plugins/lbf/
   .mcp.json                         Claude Code MCP server
   .codex-plugin/plugin.json         Codex manifest
   codex.mcp.json                    Codex MCP server (key from LBF_API_KEY)
-  skills/                           shared: lbf-platform, client-review, reports, tasks, planner, connect
+  skills/                           shared: lbf-platform, client-review, reports, monthly-report, tasks, planner, connect
 ```
 
 Server: `https://lbf-reporting-platform.vercel.app/api/mcp/mcp`. Bump `version` in
