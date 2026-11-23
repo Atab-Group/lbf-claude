@@ -3,7 +3,8 @@
   "client": {
     "slug": "sample-trail-run",
     "name": "Sample Trail Run",
-    "logoUrl": "images/logo.svg"
+    "logoUrl": null,
+    "logoDataUri": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzNjAgMTIwIj48cGF0aCBkPSJNMTAgMTAwIEw2MCAzMCBMODUgNjIgTDEwNSA0MCBMMTUwIDEwMCBaIiBmaWxsPSIjNzRjMDQzIi8+PHRleHQgeD0iMTY1IiB5PSI2MiIgZm9udC1mYW1pbHk9IkFyaWFsLCBIZWx2ZXRpY2EsIHNhbnMtc2VyaWYiIGZvbnQtd2VpZ2h0PSI3MDAiIGZvbnQtc2l6ZT0iMzQiIGZpbGw9IiNmZmYiPlNBTVBMRTwvdGV4dD48dGV4dCB4PSIxNjUiIHk9IjEwMCIgZm9udC1mYW1pbHk9IkFyaWFsLCBIZWx2ZXRpY2EsIHNhbnMtc2VyaWYiIGZvbnQtd2VpZ2h0PSI3MDAiIGZvbnQtc2l6ZT0iMzQiIGZpbGw9IiNmZmYiPlRSQUlMIFJVTjwvdGV4dD48L3N2Zz4="
   },
   "month": "2026-10",
   "monthLabel": "October 2026",
@@ -333,9 +334,9 @@
           "permalink": "https://example.com/post",
           "viewsDisplay": "940",
           "reachDisplay": "811",
-          "likesDisplay": "17",
+          "likesDisplay": "1",
           "savesDisplay": "0",
-          "sharesDisplay": "4",
+          "sharesDisplay": "1",
           "engagementRateDisplay": "2.2%"
         }
       ],

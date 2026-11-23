@@ -286,6 +286,33 @@ def bar_pct(rows, field):
         r["barSmall"] = top and v / top < 0.18
 
 
+STAT_WORDS = {"views": "view", "likes": "like", "saves": "save", "shares": "share",
+              "purchases": "purchase", "clicks": "click", "comments": "comment", "reposts": "repost"}
+COUNT_WORD = re.compile(r"(?<![\d.,])([+\-]?[\d][\d.,]*[KkMm]?)\s+(" + "|".join(STAT_WORDS) + r")\b")
+
+
+def counted(display, plural):
+    """'1' share, '0' shares, '2.3K' views: singular only for exactly one."""
+    if display in (None, ""):
+        return None
+    word = STAT_WORDS[plural] if str(display).lstrip("+") == "1" else plural
+    return f"{display} {word}"
+
+
+def singularise(text):
+    """Fix '1 shares' in a line the server built, such as an ad's '1 purchases · R67'."""
+    if not isinstance(text, str):
+        return text
+    return COUNT_WORD.sub(lambda m: counted(m.group(1), m.group(2)), text)
+
+
+def stat_lines(p):
+    parts1 = [counted(p.get("viewsDisplay"), "views"), counted(p.get("likesDisplay"), "likes")]
+    parts2 = [counted(p.get("savesDisplay"), "saves"), counted(p.get("sharesDisplay"), "shares")]
+    p["statLine1"] = " · ".join(x for x in parts1 if x)
+    p["statLine2"] = " · ".join(x for x in parts2 if x)
+
+
 def short_name(post):
     words = (post.get("caption") or "").split()
     name = " ".join(words[:6])
@@ -300,6 +327,9 @@ def prep_posts(posts, names, omit, assets, slots):
         p = dict(p)
         p["name"] = names.get(p.get("id")) or p.get("name") or short_name(p)
         p["img"] = assets.get(p.get("imageUrl"))
+        stat_lines(p)
+        for line in ("line1", "line2"):
+            p[line] = singularise(p.get(line))
         out.append(p)
     return out[:slots]
 
@@ -321,6 +351,7 @@ def page_context(key, pack, copy_pages, omit, assets):
         if top and top.get("id") not in omit:
             top["img"] = assets.get(top.get("imageUrl"))
             top["platformLabel"] = (top.get("platform") or "").replace("_", " ")
+            stat_lines(top)
         else:
             raw["topPost"] = None
         ctx["foot"] = f"{pack['monthLabel']} · % changes are against {pack['prevMonthLabel']}"
@@ -361,8 +392,12 @@ def page_context(key, pack, copy_pages, omit, assets):
             f"{f.get('countDisplay')} {f.get('format')}" for f in (raw.get("formats") or [])[:4] if f.get("countDisplay")
         )
     elif key == "looking-ahead":
-        if not raw.get("keyDates"):
-            raw["keyDates"] = (pack.get("notes") or {}).get("keyDates") or []
+        raw["keyDates"] = (raw.get("keyDates") or cp.get("keyDates")
+                           or (pack.get("notes") or {}).get("keyDates") or [])
+        blocks = [b for b in cp.get("blocks") or [] if isinstance(b, dict)]
+        cp["blocks"] = blocks
+        # no key dates: the blocks take the full width in two columns; with dates, two columns from four blocks
+        raw["blocksTwoCols"] = len(blocks) >= (4 if raw["keyDates"] else 2)
 
     if "foot" not in ctx:
         ctx["foot"] = raw.get("footLine") or f"{pack['monthLabel']} · MoM is against {pack['prevMonthLabel']}"
@@ -428,6 +463,29 @@ def print_pdf(html_path, pdf_path):
         raise BuildError(f"Chrome could not print the PDF (exit {res.returncode}).\n{res.stderr[-1500:]}")
 
 
+def report_fit(html_path):
+    """Read back what the page's fit script did, so a shrink or an overflow is never silent."""
+    chrome = find_chrome()
+    with tempfile.TemporaryDirectory(prefix="lbf-chrome-") as profile:
+        res = subprocess.run([
+            chrome, "--headless=new", "--disable-gpu", "--no-first-run", f"--user-data-dir={profile}",
+            "--window-size=1280,720", "--virtual-time-budget=15000", "--dump-dom", html_path.resolve().as_uri(),
+        ], capture_output=True, text=True, timeout=180)
+    dom = res.stdout
+    if 'data-fitted="1"' not in dom:
+        print("warning: could not confirm that every page fits; look at each page of the PDF.", file=sys.stderr)
+        return
+    for m in re.finditer(r'<section class="page[^"]*" data-page="([a-z-]+)"([^>]*)>', dom):
+        key, attrs = m.group(1), m.group(2)
+        over = 'data-overflow="1"' in attrs
+        fit = re.search(r'data-fit="([\d.]+)"', attrs)
+        if over:
+            print(f"warning: the {key} page still runs past its footer at 80% size. Shorten its copy.", file=sys.stderr)
+        elif fit:
+            print(f"warning: the {key} page was shrunk to {round(float(fit.group(1)) * 100)}% to fit. "
+                  "Shorter copy would print larger.", file=sys.stderr)
+
+
 def build(pack_path, copy_path, out_dir):
     pack = load_json(pack_path, "pack")
     copy = load_json(copy_path, "copy")
@@ -465,7 +523,11 @@ def build(pack_path, copy_path, out_dir):
 
     shell, templates, partials = split_template(TEMPLATE.read_text(encoding="utf-8"))
     client = dict(pack["client"])
-    client["logo"] = assets.get(client.get("logoUrl"))
+    data_uri = client.get("logoDataUri")
+    if isinstance(data_uri, str) and re.match(r"data:image/(png|jpeg|webp|gif|svg\+xml);base64,[A-Za-z0-9+/=\s]+$", data_uri):
+        client["logo"] = data_uri
+    else:
+        client["logo"] = assets.get(client.get("logoUrl"))
     root = {k: v for k, v in pack.items() if k not in ("page",)}
     root["client"] = client
 
@@ -494,6 +556,7 @@ def build(pack_path, copy_path, out_dir):
         pdf_path.unlink()
     print_pdf(html_path, pdf_path)
     print(f"wrote {pdf_path}")
+    report_fit(html_path)
 
 
 def main():

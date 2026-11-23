@@ -38,7 +38,7 @@ missing, ask for it once. If they say there is none, carry on: that page shows a
 
 ### 2. Read the pack and the content calendar
 
-1. Call `get_report_pack` (client, month). Read `pages`, `missing` and `notes`.
+1. Call `get_report_pack` with `{clientRef, month}`. Read `pages`, `missing` and `notes`.
 2. If the client has a content calendar Google Sheet (the account manager names it, or it is in the
    client's documents), read it:
    - In Claude Code, with the `gws` command-line tool, signed in as the user:
@@ -47,33 +47,48 @@ missing, ask for it once. If they say there is none, carry on: that page shows a
    - On other surfaces, with the Google Drive connector.
    - If the sign-in fails, say so and carry on without it. The Content insights page then has no
      calendar pillars.
-3. Turn the month's rows into `{date, pillar, format, title}` (date as `YYYY-MM-DD`) and call
-   `save_content_calendar` (client, month, rows). Tell the account manager which rows did not match a
-   post; do not guess a match for them.
+3. Call `save_content_calendar` with `{clientRef, month, rows: [{date, pillar, format?, title?}]}`, one
+   row per calendar entry for the month, `date` as `YYYY-MM-DD`. Tell the account manager which rows did
+   not match a post; do not guess a match for them.
 
 ### 3. One confirm table
 
-1. Read both screenshots: views, from organic, from ads, reach (Instagram) or viewers (Facebook),
-   content interactions, and watch time where it shows. Read exactly what is printed.
+1. Read both screenshots. For each figure the card prints, read the number **and** the change printed
+   beside it ("↓ 36.5%" is `-36.5`, "↑ 19.8%" is `19.8`). The report's month-on-month for these figures
+   comes from those changes, so read every one that is printed.
+   - Instagram card: views, from organic, from ads, reach, content interactions.
+   - Facebook card: views, from organic, from ads, viewers, content interactions, watch time.
+   - **The Instagram card's headline "Views" can include Facebook views.** The small split beside it
+     (a Facebook figure and an Instagram figure) shows this. Save the Instagram-only number, and use the
+     "Total" in the views breakdown when it matches it.
+   - Write each figure as the plain number printed in full (55614, not 55.6K). Where the card shows only
+     a rounded figure and no full one, ask the account manager for the exact number.
 2. For each competitor (the handles in `page.competitors.rows`, or `competitor_instagram` from
-   `get_client_overview`), look up the Instagram follower count on the web (the public profile). Note
-   the page you read it from and today's date.
-3. Show **one** table: the screenshot figures for each platform, then each competitor with its count and
-   source. Where a count is rounded ("12.4K") or missing, write "please type the exact number" in that
-   cell. The account manager types those numbers from the Instagram app.
+   `get_client_overview`), look up the Instagram follower count on the web. A public profile page gives
+   it in its description ("2,870 Followers"). Note the page you read it from and today's date.
+3. Show **one** table: the screenshot figures and their changes for each platform, then each competitor
+   with its count and source. Where a count is rounded ("38K") or missing, write "please type the exact
+   number" in that cell. The account manager types those numbers from the Instagram app.
 4. Wait for a yes or corrections. This is the only stop before the PDF.
 5. On yes:
    - Where the surface can upload a file, send each screenshot with `create_upload` (kind `screenshot`,
-     month, platform, contentType, sizeBytes), PUT the bytes to the returned link, and keep the
-     `upload_id`.
-   - Call `save_screenshot_figures` (client, month, platform, figures, upload_id?) once for `instagram`
-     and once for `facebook`. `upload_id` is optional.
-   - Call `save_competitor_followers` (client, month, rows), one row per handle, with the count, the
-     source link and the date read.
+     `clientRef`, `month`, `platform`, `contentType`, `sizeBytes`), PUT the bytes to the returned link,
+     and keep its `uploadId`.
+   - Call `save_screenshot_figures` once for `instagram` and once for `facebook`:
+     ```
+     {clientRef, month, platform: "instagram" | "facebook",
+      figures: {views?, reach?, interactions?, followers?, viewsOrganic?, viewsAds?, viewers?, watchTimeMinutes?},
+      changes?: {the same keys},
+      uploadId?, note?}
+     ```
+     `figures` are plain numbers. `changes` are the signed percent the screenshot prints beside each
+     figure (`-36.5` for "down 36.5%"). A change needs its figure: never send a change alone. Watch time
+     goes in as whole minutes (2h 28m is 148). `note` is for anything the account manager said about the
+     screenshot.
+   - Call `save_competitor_followers` with
+     `{clientRef, month, rows: [{handle, name?, followers, sourceUrl?, readOn?}]}`, one row per handle,
+     `followers` as a plain number, `readOn` as `YYYY-MM-DD`.
    - Writes return a job handle: poll `get_job` until `done`, and read any refusal.
-
-The argument names above are the plan's. The tool schema is the final word on spelling: the platform
-names the client `clientRef` and the upload `uploadId`.
 
 ### 4. Build the PDF
 
@@ -90,6 +105,8 @@ names the client `clientRef` and the upload `uploadId`.
    takeaway holds a number typed by hand, or when a page in `pack.pages` has no takeaway. Fix
    `copy.json` and run it again. `check_figures.py` must print `ok`. If it lists a number, find it in
    `copy.json` and replace it with a placeholder or take it out.
+   If `build.py` warns that a page was shrunk to fit or still runs past its footer, shorten that page's
+   copy and build again. It never drops text, so an overflow is visible on the page.
 4. Show the PDF (`out/report.pdf`). Also tell the account manager what `pack.missing` still lists and
    which images did not load (the build prints both).
 
@@ -103,9 +120,9 @@ say which figure, and check it at the source (the screenshot table, or the platf
 
 Only on the account manager's yes:
 
-1. `create_upload` with kind `report_deck`, the month, contentType `application/pdf` and the file's
-   sizeBytes. PUT the PDF bytes to the link.
-2. `upload_report_deck` (client, month, upload_id). Poll `get_job` until `done`.
+1. `create_upload` with kind `report_deck`, `clientRef`, `month`, contentType `application/pdf` and the
+   file's `sizeBytes`. PUT the PDF bytes to the link.
+2. `upload_report_deck` with `{clientRef, month, uploadId}`. Poll `get_job` until `done`.
 
 Nothing is sent to the client. The account manager sends the PDF themselves, from their own email.
 
@@ -120,7 +137,7 @@ Nothing is sent to the client. The account manager sends the PDF themselves, fro
 | `google-ads` | `nextLine`, optional: "Next: ..." |
 | `what-worked` | `posts`: `[{id, name, why, how}]` for the posts the pack lists, in its order |
 | `content-insights` | `doMore`, `keep`, `rework` |
-| `looking-ahead` | `blocks`: up to three `{heading, text}` |
+| `looking-ahead` | `blocks`: `[{heading, text}]`, every one is shown; `keyDates`: `[{dateLabel, label}]`, optional |
 | top level | `omitPosts`: ids of pack posts to leave out |
 
 The pack decides which posts, ads and videos a page shows. You name them and may leave one out with
@@ -154,7 +171,8 @@ and the rule is the same: no hand-typed figures anywhere.
 - Use "rose" or "fell" with `{key.change}`, so a sign never doubles up ("fell -12%").
 - Looking ahead and every "planned" line come **only from the account manager's notes**: the notes in
   the chat and `pack.notes` (`lookAhead`, `highlights`, `keyDates`). Do not add plans of your own. If
-  there are no notes, ask for them before writing that page.
+  there are no notes, ask for them before writing that page. When the notes name dates, put them in
+  `keyDates` (they show in the left column, as in the template) rather than in a block.
 - Speak as the agency to its client: "we", the client's name, plain words. UK spelling.
 - **No em dashes.** Use a colon, a comma or a full stop.
 - Post names are short and describe the post ("Ridge line carousel"), with no figures in them.
@@ -177,7 +195,7 @@ Never add sample data to fill a page.
 | `what-worked` | up to three posts: why it worked, how we do more of it |
 | `content-insights` | pillar table, average reach by format, do more / keep / rework |
 | `competitors` | Instagram followers for us and each competitor |
-| `looking-ahead` | key dates, up to three plan blocks |
+| `looking-ahead` | key dates in a left column, then every plan block; without dates the blocks use the full width in two columns |
 
 Post and ad images sit in 4:5 frames, cropped to fill. None is wider than square.
 

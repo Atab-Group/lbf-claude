@@ -7,11 +7,13 @@
     "Placeholders in copy.json text: {ig.views} prints display, {ig.views.mom} prints mom.display, {ig.views.change} prints mom.display without its sign (for copy after 'rose' or 'fell'), {ig.views.prev} prints prev.display. Only keys present in pack.figures are legal.",
     "A takeaway line in copy.json must not contain a digit outside a placeholder. build.py stops if it does.",
     "Image URLs are presigned and last 7 days. build.py downloads them at build time.",
+    "Every block in copy.pages['looking-ahead'].blocks is rendered. Key dates come from pack.page['looking-ahead'].keyDates, else copy.pages['looking-ahead'].keyDates (optional, written from the account manager's notes), else pack.notes.keyDates.",
+    "Post stat lines ('1 share', '2 shares') are built by build.py from the *Display values, so the pack sends counts, not sentences.",
     "pack.missing lists inputs still needed before the report is complete; each has a key and a plain message for the account manager."
   ],
   "pack": {
     "schemaVersion": 1,
-    "client": { "slug": "sample-trail-run", "name": "Sample Trail Run", "logoUrl": "https://…/logo.png" },
+    "client": { "slug": "sample-trail-run", "name": "Sample Trail Run", "logoUrl": "https://…/logo.png", "logoDataUri": "data:image/png;base64,… (optional; build.py uses it first, then logoUrl, then the name as text)" },
     "month": "2026-10",
     "monthLabel": "October 2026",
     "prevMonthLabel": "September 2026",
@@ -105,7 +107,7 @@
       "what-worked": { "takeaway": "…", "posts": [ { "id": "pm_123", "name": "Ridge line carousel", "why": "…", "how": "…" } ] },
       "content-insights": { "takeaway": "…", "doMore": "…", "keep": "…", "rework": "…" },
       "competitors": { "takeaway": "…" },
-      "looking-ahead": { "takeaway": "…", "blocks": [ { "heading": "Content", "text": "…" } ] }
+      "looking-ahead": { "takeaway": "…", "blocks": [ { "heading": "Content", "text": "…" } ], "keyDates": [ { "dateLabel": "15 November", "label": "Early entry closes" } ] }
     },
     "omitPosts": ["pm_999"]
   }
