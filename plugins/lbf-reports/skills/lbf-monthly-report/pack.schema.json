@@ -1,0 +1,111 @@
+{
+  "_about": "Contract between the platform verb get_report_pack and this skill. Version 1. The pack is computed by the server; the skill never calculates a figure. copy.json is written by Claude; build.py merges the two into the template.",
+  "_rules": [
+    "Every number shown on a page comes from pack.figures[key].display (or a *Display field on a list row). Nothing is formatted or calculated in the skill.",
+    "A figure is {value, display, mom, prev, source}. value is the raw number. display is the string to print. mom is null or {display, direction} with direction 'up' | 'down' | 'flat', always against the previous month. prev is null or {display}. source is 'screenshot' | 'windsor' | 'metricool' | 'ghl' | 'lookup'.",
+    "pack.pages is the ordered list of pages this client has data for this month. A page key missing from pack.pages is not rendered. pack.page[<key>] holds that page's lists and the figure keys it shows.",
+    "Placeholders in copy.json text: {ig.views} prints display, {ig.views.mom} prints mom.display, {ig.views.prev} prints prev.display. Only keys present in pack.figures are legal.",
+    "A takeaway line in copy.json must not contain a digit outside a placeholder. build.py stops if it does.",
+    "Image URLs are presigned and last 7 days. build.py downloads them at build time.",
+    "pack.missing lists inputs still needed before the report is complete; each has a key and a plain message for the account manager."
+  ],
+  "pack": {
+    "schemaVersion": 1,
+    "client": { "slug": "sample-trail-run", "name": "Sample Trail Run", "logoUrl": "https://…/logo.png" },
+    "month": "2026-10",
+    "monthLabel": "October 2026",
+    "prevMonthLabel": "September 2026",
+    "dataAsOf": "31 October 2026",
+    "pages": ["cover", "key-outcomes", "meta-ads", "google-ads", "instagram", "facebook", "tiktok", "linkedin", "emailers", "what-worked", "content-insights", "competitors", "looking-ahead"],
+    "missing": [
+      { "key": "screenshot.facebook", "message": "Facebook Content overview screenshot figures are not saved yet." }
+    ],
+    "notes": {
+      "highlights": ["Entries opened for the December race."],
+      "lookAhead": "Free text the account manager already saved in Settings, or an empty string.",
+      "keyDates": [ { "dateLabel": "15 November", "label": "Early entry closes" } ]
+    },
+    "figures": {
+      "ig.followers":        { "value": 6820, "display": "6,820", "mom": { "display": "+3.1%", "direction": "up" }, "prev": { "display": "6,615" }, "source": "windsor" },
+      "ig.new_followers":    { "value": 205, "display": "+205", "mom": { "display": "+17.8%", "direction": "up" }, "prev": { "display": "174" }, "source": "windsor" },
+      "ig.views":            { "value": 73480, "display": "73.5K", "mom": { "display": "-12.4%", "direction": "down" }, "prev": { "display": "83.9K" }, "source": "screenshot" },
+      "_other_keys": "ig.views_organic, ig.views_ads, ig.reach, ig.interactions | fb.followers, fb.new_followers, fb.views, fb.views_organic, fb.views_ads, fb.viewers, fb.interactions, fb.watch_time | tt.followers, tt.views, tt.engagement_rate, tt.avg_watch_time, tt.likes, tt.comments, tt.shares, tt.profile_views | li.followers, li.impressions, li.clicks, li.engagement_rate, li.reactions, li.comments, li.reposts | meta.spend plus the goal's own keys (purchase goal: meta.purchases, meta.cost_per_purchase, meta.roas, meta.revenue; other goals: meta.results, meta.cost_per_result, meta.reach, meta.clicks) | google.spend, google.clicks, google.ctr, google.conversions, google.cost_per_conversion, google.value, google.roas | email.open_rate, email.click_rate, email.click_to_open, email.unsub_rate"
+    },
+    "page": {
+      "key-outcomes": {
+        "channelTiles": [ { "label": "Instagram", "tag": "Followers", "figure": "ig.followers", "subLine": "+205 from 6,615" } ],
+        "paidTiles": [ { "label": "Paid: Meta", "tag": "Spend", "figure": "meta.spend", "subLine": "from R3,262.30 in September", "cells": [ { "label": "Purchases", "figure": "meta.purchases" } ] } ],
+        "topPost": { "$ref": "post" }
+      },
+      "meta-ads": {
+        "cards": [ { "label": "Amount spent", "figure": "meta.spend" } ],
+        "ads": [ { "id": "ad_1", "name": "Forest Route Reel", "imageUrl": "https://…", "line1": "R1,884.20 spend", "line2": "31 purchases · R61" } ],
+        "footLine": "October 2026 · MoM is against September 2026 · top five ads by spend, with cost per purchase"
+      },
+      "google-ads": {
+        "cards": [ { "label": "Amount spent", "figure": "google.spend" } ],
+        "campaigns": [ { "name": "Search | Brand", "spendDisplay": "R940.00", "clicksDisplay": "1,021", "convDisplay": "19", "costPerConvDisplay": "R49.47" } ],
+        "campaignsTotal": { "spendDisplay": "R2,915.00", "clicksDisplay": "2,236", "convDisplay": "37", "costPerConvDisplay": "R78.78" },
+        "searchTerms": [ { "term": "sample trail run entries", "clicksDisplay": "241", "clicks": 241 } ]
+      },
+      "instagram": {
+        "screenshotUrl": "https://… (the saved Content overview screenshot, or null)",
+        "followersTile": { "new": "ig.new_followers", "total": "ig.followers", "subLine": "vs 174 gained in September" },
+        "posts": [ { "$ref": "post" } ],
+        "audienceLine": "25-34 (38%) · 52% women · W. Cape 51%"
+      },
+      "facebook": { "_same_shape_as": "instagram, with fb.* keys" },
+      "tiktok": {
+        "cards": [ { "label": "Followers", "figure": "tt.followers" } ],
+        "engagement": [ { "label": "Likes", "figure": "tt.likes" } ],
+        "videos": [ { "$ref": "post" } ]
+      },
+      "linkedin": {
+        "cards": [ { "label": "Followers", "figure": "li.followers" } ],
+        "posts": [ { "title": "Partner announcement", "viewsDisplay": "2,870", "likesDisplay": "96", "sharesDisplay": "12" } ],
+        "industries": [ { "name": "Retail", "pctDisplay": "13%", "pct": 13 } ],
+        "totalsLine": "241 reactions · 31 comments · 19 reposts across all posts"
+      },
+      "emailers": {
+        "cards": [ { "label": "Open rate", "figure": "email.open_rate", "benchmarkLine": "below 35.6% avg" } ],
+        "funnel": { "title": "From list to click: Forest Route Launch, 14 Oct", "steps": [ { "label": "Sent", "display": "4,388", "value": 4388 } ], "footLine": "732 contacts skipped (suppressed) · 41 hard bounces · 9 unsubscribes · 1 spam report" },
+        "benchmarksLine": "Benchmarks: open rate 35.63% · click rate 2.62% · unsubscribe 0.22% (Mailchimp, all users, Dec 2023)"
+      },
+      "what-worked": { "posts": [ { "$ref": "post" } ], "footLine": "Eng. rate = likes + saves + shares, divided by views" },
+      "content-insights": {
+        "pillars": [ { "pillar": "Route and scenery", "postsDisplay": "7", "avgReachDisplay": "1,240", "engRateDisplay": "6.1%", "best": true } ],
+        "formats": [ { "format": "Reels", "avgReachDisplay": "1,180", "avgReach": 1180, "countDisplay": "9" } ],
+        "postCountLine": "24 posts across Instagram and Facebook"
+      },
+      "competitors": {
+        "rows": [ { "name": "Sample Trail Run (us)", "handle": "@sampletrailrun", "followersDisplay": "6,820", "changeDisplay": "+205", "isUs": true } ],
+        "footLine": "Follower counts are read from each public Instagram profile · read on 2 November 2026 · vs last month uses the figure saved the month before"
+      },
+      "looking-ahead": { "keyDates": [ { "dateLabel": "15 November", "label": "Early entry closes" } ] }
+    },
+    "post": {
+      "_note": "Shape of every post / video row referenced above as {\"$ref\": \"post\"}.",
+      "id": "pm_123", "platform": "instagram", "dateLabel": "24 Oct", "format": "Carousel",
+      "caption": "Ridge line at first light, with the new aid station…", "imageUrl": "https://…", "permalink": "https://www.instagram.com/p/…",
+      "viewsDisplay": "2.4K", "reachDisplay": "1,906", "likesDisplay": "131", "savesDisplay": "14", "sharesDisplay": "22", "engagementRateDisplay": "6.9%"
+    }
+  },
+  "copy": {
+    "_note": "Written by Claude. Text only. One entry per page in pack.pages; cover needs none.",
+    "pages": {
+      "key-outcomes": { "takeaway": "Meta ads returned {meta.roas} on {meta.spend} spend, and followers grew on every channel." },
+      "meta-ads": { "takeaway": "…" },
+      "google-ads": { "takeaway": "…", "nextLine": "Next: …" },
+      "instagram": { "takeaway": "…", "postNames": { "pm_123": "Ridge line carousel" } },
+      "facebook": { "takeaway": "…", "postNames": {} },
+      "tiktok": { "takeaway": "…", "postNames": {} },
+      "linkedin": { "takeaway": "…" },
+      "emailers": { "takeaway": "…" },
+      "what-worked": { "takeaway": "…", "posts": [ { "id": "pm_123", "name": "Ridge line carousel", "why": "…", "how": "…" } ] },
+      "content-insights": { "takeaway": "…", "doMore": "…", "keep": "…", "rework": "…" },
+      "competitors": { "takeaway": "…" },
+      "looking-ahead": { "takeaway": "…", "blocks": [ { "heading": "Content", "text": "…" } ] }
+    },
+    "omitPosts": ["pm_999"]
+  }
+}
