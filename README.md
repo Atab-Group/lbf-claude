@@ -60,22 +60,22 @@ report for <client>", attaches the two Meta Business Suite Content overview scre
 answers only for a figure that is unclear, and gets a link to the PDF. Every figure comes from the platform's report pack;
 Claude writes only the words.
 
-It uses the same MCP server and the same key as `lbf`. Install it beside `lbf`:
+It holds no connection of its own: it uses the `lbf` plugin's, so the key is set once, on `lbf`. The
+platform's Connect your agent message installs both. By hand, after the `lbf` steps above:
 
 ```
 claude plugin install lbf-reports@lbf --scope user
-echo '{"api_key":"<your lbf_ key>"}' | claude plugin configure lbf-reports@lbf --values-stdin
 ```
 
-In Codex: `codex plugin add lbf-reports@lbf` (it reads the same `LBF_API_KEY`).
+In Codex: `codex plugin add lbf-reports@lbf`.
 
 Nothing is installed on the machine beyond the plugin: the platform fills the layout, checks every
 number against the pack and prints the PDF (`render_report`), and saves it in the app's report list.
 
 ```
 plugins/lbf-reports/
-  .claude-plugin/plugin.json, .mcp.json        Claude Code manifest and MCP server (same as lbf)
-  .codex-plugin/plugin.json, codex.mcp.json    Codex manifest and MCP server (same as lbf)
+  .claude-plugin/plugin.json                   Claude Code manifest (no connection: lbf holds it)
+  .codex-plugin/plugin.json                    Codex manifest
   skills/lbf-monthly-report/
     SKILL.md                                   the steps and the copy rules
     pack.schema.json                           the pack contract

@@ -20,8 +20,13 @@ Files in this folder:
 
 ## Before you start
 
-- The `lbf` MCP tools must answer. If `get_report_pack` fails or the tools are missing, **stop and say
-  so**. Never build a report from memory, from an old pack, or from figures read off a screenshot alone.
+- The `lbf` MCP tools must answer. They come from the `lbf` plugin, which holds the connection and the
+  key. If the tools are missing or `get_report_pack` answers 401, **stop** and tell the person, in plain
+  words: "I'm not connected to the LBF platform yet. In the platform, open My settings, click Connect
+  your agent, copy the message and paste it here." Never build a report from memory, from an old pack,
+  or from figures read off a screenshot alone.
+- The person may not know the words "pack", "slug" or "MCP". Never ask them for one; work it out with
+  the tools. Ask only for what only they have: the screenshots, their notes, an unclear figure.
 - Use `list_clients` to turn the client's name into its slug. Months are `YYYY-MM`.
 - Write tools return a job handle. Poll `get_job` until it is `done`, then read `result`. A refusal in
   `result` is a normal answer: read it, never retry it unchanged.

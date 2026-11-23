@@ -1,6 +1,6 @@
 ---
 name: reports
-description: Use when the person asks about an LBF client's monthly report: whether it exists, its status, what is in it, whether it is ready to send, generating or regenerating it, or adding a chart page.
+description: Use when the person asks about an LBF client's monthly report that already exists: whether it exists, its status, what is in it, whether it is ready to send, or adding a chart page. Not for building, making or doing a month's report: that is the lbf-monthly-report skill.
 ---
 
 # Monthly reports
@@ -19,7 +19,14 @@ A report moves `queued`, then `generating`, then `ready`, then `sent`.
 
 ## Generating
 
-Only when the person asks, for that client and month. Confirm the client and month back to them first if
+**Building, making or doing a month's report is the `lbf-monthly-report` skill** (plugin `lbf-reports`):
+the account manager's screenshots and notes in, a PDF out. Use it for "make / build / do the October
+report for <client>". If that skill is not installed, say so and point them to My settings, Connect your
+agent, in the platform; do not fall back to `generate_report`.
+
+`generate_report` is the platform's older automatic run. Call it only when the person names it: "run the
+platform's report generation", "press Generate", "regenerate it in the platform". Only for that client
+and month. Confirm the client and month back to them first if
 there is any doubt, because a run replaces the current draft.
 
 1. Call `generate_report` with `clientRef` and `month`.
