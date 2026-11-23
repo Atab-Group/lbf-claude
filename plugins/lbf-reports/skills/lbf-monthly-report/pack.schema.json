@@ -4,7 +4,7 @@
     "Every number shown on a page comes from pack.figures[key].display (or a *Display field on a list row). Nothing is formatted or calculated in the skill.",
     "A figure is {value, display, mom, prev, source}. value is the raw number. display is the string to print. mom is null or {display, direction} with direction 'up' | 'down' | 'flat', always against the previous month. prev is null or {display}. source is 'screenshot' | 'windsor' | 'metricool' | 'ghl' | 'lookup'.",
     "pack.pages is the ordered list of pages this client has data for this month. A page key missing from pack.pages is not rendered. pack.page[<key>] holds that page's lists and the figure keys it shows.",
-    "Placeholders in copy.json text: {ig.views} prints display, {ig.views.mom} prints mom.display, {ig.views.prev} prints prev.display. Only keys present in pack.figures are legal.",
+    "Placeholders in copy.json text: {ig.views} prints display, {ig.views.mom} prints mom.display, {ig.views.change} prints mom.display without its sign (for copy after 'rose' or 'fell'), {ig.views.prev} prints prev.display. Only keys present in pack.figures are legal.",
     "A takeaway line in copy.json must not contain a digit outside a placeholder. build.py stops if it does.",
     "Image URLs are presigned and last 7 days. build.py downloads them at build time.",
     "pack.missing lists inputs still needed before the report is complete; each has a key and a plain message for the account manager."
@@ -69,7 +69,8 @@
       "emailers": {
         "cards": [ { "label": "Open rate", "figure": "email.open_rate", "benchmarkLine": "below 35.6% avg" } ],
         "funnel": { "title": "From list to click: Forest Route Launch, 14 Oct", "steps": [ { "label": "Sent", "display": "4,388", "value": 4388 } ], "footLine": "732 contacts skipped (suppressed) · 41 hard bounces · 9 unsubscribes · 1 spam report" },
-        "benchmarksLine": "Benchmarks: open rate 35.63% · click rate 2.62% · unsubscribe 0.22% (Mailchimp, all users, Dec 2023)"
+        "benchmarksLine": "Benchmarks: open rate 35.63% · click rate 2.62% · unsubscribe 0.22% (Mailchimp, all users, Dec 2023)",
+        "creativeUrl": "https://… (optional: an image of the email itself, shown beside the funnel; null or absent leaves it out)"
       },
       "what-worked": { "posts": [ { "$ref": "post" } ], "footLine": "Eng. rate = likes + saves + shares, divided by views" },
       "content-insights": {
@@ -81,7 +82,7 @@
         "rows": [ { "name": "Sample Trail Run (us)", "handle": "@sampletrailrun", "followersDisplay": "6,820", "changeDisplay": "+205", "isUs": true } ],
         "footLine": "Follower counts are read from each public Instagram profile · read on 2 November 2026 · vs last month uses the figure saved the month before"
       },
-      "looking-ahead": { "keyDates": [ { "dateLabel": "15 November", "label": "Early entry closes" } ] }
+      "looking-ahead": { "keyDates": [ { "dateLabel": "15 November", "label": "Early entry closes" } ], "footLine": "Plan for November 2026 (optional)" }
     },
     "post": {
       "_note": "Shape of every post / video row referenced above as {\"$ref\": \"post\"}.",
