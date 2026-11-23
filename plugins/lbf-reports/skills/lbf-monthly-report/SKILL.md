@@ -1,144 +1,154 @@
 ---
 name: lbf-monthly-report
-description: Use when an account manager asks to build, make or redo the monthly report for a Let's Be Frank client, for example "build the monthly report for <client>", "build the October report for <client>", "make <client>'s report". Turns the platform's report pack, the two Meta Content overview screenshots and the account manager's notes into a PDF in the agency's 13-page layout.
+description: Use when an account manager asks to build, make or redo the monthly report for a Let's Be Frank client, for example "build the monthly report for <client>", "build the October report for <client>", "make <client>'s report". Turns the platform's report pack, the two Meta Content overview screenshots and the account manager's notes into a PDF in the agency's 13-page layout, printed by the platform.
 ---
 
 # Build a client's monthly report
 
 You build one client's report for one month as a PDF. The platform supplies every figure in a JSON
-"pack". You write the words. `template/build.py` puts both into the fixed layout and prints the PDF.
-You never calculate, round or type a figure yourself.
+"pack". You write the words (the "copy") and send them to `render_report`. The platform fills its
+fixed layout, checks every printed number against the pack, prints the PDF and saves it in the app's
+report list. You never calculate, round or type a figure yourself, and nothing runs on this machine.
 
 Files in this folder:
 
-- `pack.schema.json`: the shape of the pack and of `copy.json`, with the rules that bind them.
-- `template/report.html`: the 13 page layouts. Never edit it for a client.
-- `template/build.py`: makes `out/report.html` and `out/report.pdf`.
-- `template/check_figures.py`: lists every number in the PDF that is not in the pack.
-- `fixtures/`: a fictional client ("Sample Trail Run") to see what a full pack and copy look like.
+- `pack.schema.json`: the shape of the pack, with the rules that bind the pack and the copy.
+- `copy.schema.json`: the exact shape `render_report` accepts as `copy`. It is generated from the
+  platform's own check, so it is always current.
+- `fixtures/`: a fictional client ("Sample Trail Run"): a full pack and its copy, and a small one, to
+  see what good copy looks like.
 
 ## Before you start
 
 - The `lbf` MCP tools must answer. If `get_report_pack` fails or the tools are missing, **stop and say
   so**. Never build a report from memory, from an old pack, or from figures read off a screenshot alone.
-- You need Python 3 and Chrome or Chromium on this machine (`build.py` finds `google-chrome`,
-  `chromium`, `chromium-browser` or `google-chrome-for-testing`, or the path in `CHROME_BIN`), and
-  `pdftotext` (poppler-utils) for the figure check.
-- Work in a folder of its own, for example `~/lbf-reports/<client-slug>-<YYYY-MM>/`. The skill folder
-  is read-only for you.
 - Use `list_clients` to turn the client's name into its slug. Months are `YYYY-MM`.
+- Write tools return a job handle. Poll `get_job` until it is `done`, then read `result`. A refusal in
+  `result` is a normal answer: read it, never retry it unchanged.
 
 ## The steps
 
-### 1. The account manager asks
+### 1. Read the pack
 
-They name the client and the month, attach the two Meta Business Suite "Content overview" screenshots
-(one for Instagram, one for Facebook, both for the report month) and add any notes. If a screenshot is
-missing, ask for it once. If they say there is none, carry on: that page shows a neutral block.
+The account manager names the client and the month, attaches the two Meta Business Suite "Content
+overview" screenshots (Instagram and Facebook, both for the report month) and adds any notes.
 
-### 2. Read the pack and the content calendar
+Call `get_report_pack` with `{clientRef, month}`. Read `pages`, `missing`, `notes` and `figures`.
+Keep this first answer: its Instagram and Facebook figures are the synced ones you compare the
+screenshots against in step 2 (a figure whose `source` is not `screenshot`).
 
-1. Call `get_report_pack` with `{clientRef, month}`. Read `pages`, `missing` and `notes`.
-2. If the client has a content calendar Google Sheet (the account manager names it, or it is in the
-   client's documents), read it:
-   - In Claude Code, with the `gws` command-line tool, signed in as the user:
-     `gws drive files list --params '{"q": "name contains \"calendar\"", "pageSize": 20}'` to find it,
-     then `gws sheets +read --spreadsheet <id> --range "<tab>"` for the month's tab.
-   - On other surfaces, with the Google Drive connector.
-   - If the sign-in fails, say so and carry on without it. The Content insights page then has no
-     calendar pillars.
-3. Call `save_content_calendar` with `{clientRef, month, rows: [{date, pillar, format?, title?}]}`, one
-   row per calendar entry for the month, `date` as `YYYY-MM-DD`. Tell the account manager which rows did
-   not match a post; do not guess a match for them.
+If the client has a content calendar Google Sheet (the account manager names it, or it is in the
+client's documents), read the month's tab (in Claude Code with the `gws` tool, elsewhere with the
+Google Drive connector). Call `save_content_calendar` with
+`{clientRef, month, rows: [{date, pillar, format?, title?}]}`, `date` as `YYYY-MM-DD`. If the sign-in
+fails, carry on without it: the Content insights page then has no calendar pillars.
 
-### 3. One confirm table
+### 2. Screenshots
 
-1. Read both screenshots. For each figure the card prints, read the number **and** the change printed
-   beside it ("↓ 36.5%" is `-36.5`, "↑ 19.8%" is `19.8`). The report's month-on-month for these figures
-   comes from those changes, so read every one that is printed.
+If a screenshot is missing, ask for it once. If there is none, carry on: that page shows a neutral
+block, and the synced figures stay.
+
+1. Read each card. For each figure, read the number **and** the change printed beside it ("↓ 36.5%"
+   is `-36.5`, "↑ 19.8%" is `19.8`).
    - Instagram card: views, from organic, from ads, reach, content interactions.
    - Facebook card: views, from organic, from ads, viewers, content interactions, watch time.
    - **The Instagram card's headline "Views" can include Facebook views.** The small split beside it
-     (a Facebook figure and an Instagram figure) shows this. Save the Instagram-only number, and use the
-     "Total" in the views breakdown when it matches it.
-   - Write each figure as the plain number printed in full (55614, not 55.6K). Where the card shows only
-     a rounded figure and no full one, ask the account manager for the exact number.
-2. For each competitor (the handles in `page.competitors.rows`, or `competitor_instagram` from
-   `get_client_overview`), look up the Instagram follower count on the web. A public profile page gives
-   it in its description ("2,870 Followers"). Note the page you read it from and today's date.
-3. Show **one** table: the screenshot figures and their changes for each platform, then each competitor
-   with its count and source. Where a count is rounded ("38K") or missing, write "please type the exact
-   number" in that cell. The account manager types those numbers from the Instagram app.
-4. Wait for a yes or corrections. This is the only stop before the PDF.
-5. On yes:
-   - Where the surface can upload a file, send each screenshot with `create_upload` (kind `screenshot`,
-     `clientRef`, `month`, `platform`, `contentType`, `sizeBytes`), PUT the bytes to the returned link,
-     and keep its `uploadId`.
-   - Call `save_screenshot_figures` once for `instagram` and once for `facebook`:
-     ```
-     {clientRef, month, platform: "instagram" | "facebook",
-      figures: {views?, reach?, interactions?, followers?, viewsOrganic?, viewsAds?, viewers?, watchTimeMinutes?},
-      changes?: {the same keys},
-      uploadId?, note?}
-     ```
-     `figures` are plain numbers. `changes` are the signed percent the screenshot prints beside each
-     figure (`-36.5` for "down 36.5%"). A change needs its figure: never send a change alone. Watch time
-     goes in as whole minutes (2h 28m is 148). `note` is for anything the account manager said about the
-     screenshot.
-   - Call `save_competitor_followers` with
-     `{clientRef, month, rows: [{handle, name?, followers, sourceUrl?, readOn?}]}`, one row per handle,
-     `followers` as a plain number, `readOn` as `YYYY-MM-DD`.
-   - Writes return a job handle: poll `get_job` until `done`, and read any refusal.
-
-### 4. Build the PDF
-
-1. Call `get_report_pack` again, now that the figures are saved. Save the answer as `pack.json`
-   **exactly as returned**. Do not edit it.
-2. Write `copy.json` (shape in `pack.schema.json` under `copy`; an example is
-   `fixtures/sample-copy.json`). One entry per page in `pack.pages`, except `cover`.
-3. Run:
+     shows this. Save the Instagram-only number, and use the "Total" in the views breakdown when it
+     matches it.
+   - Write each figure as the plain number in full (55614, not 55.6K). Watch time in whole minutes
+     (2h 28m is 148).
+2. **Ask the account manager only about a figure you are unsure of**: one that is cut off, blurred, or
+   shown only rounded ("55.6K" with no full number). Ask once, for all of them together. Every other
+   figure is saved straight away, with no confirm step.
+   - With nobody to ask (an unattended run), leave an unsure figure out. The synced figure stays in
+     the report. Name the figure you left out in the final message.
+3. Where the surface can upload a file, send each screenshot with `create_upload` (kind `screenshot`,
+   `clientRef`, `month`, `platform`, `contentType`, `sizeBytes`), PUT the bytes to the returned link,
+   and keep its `uploadId`.
+4. Call `save_screenshot_figures` once for `instagram` and once for `facebook`:
    ```
-   python3 <skill>/template/build.py --pack pack.json --copy copy.json --out out/
-   python3 <skill>/template/check_figures.py --pack pack.json --pdf out/report.pdf
+   {clientRef, month, platform: "instagram" | "facebook",
+    figures: {views?, reach?, interactions?, followers?, viewsOrganic?, viewsAds?, viewers?, watchTimeMinutes?},
+    changes?: {the same keys},
+    uploadId?, note?}
    ```
-   `build.py` stops and says why when a placeholder names a key that is not in `pack.figures`, when a
-   takeaway holds a number typed by hand, or when a page in `pack.pages` has no takeaway. Fix
-   `copy.json` and run it again. `check_figures.py` must print `ok`. If it lists a number, find it in
-   `copy.json` and replace it with a placeholder or take it out.
-   If `build.py` warns that a page was shrunk to fit or still runs past its footer, shorten that page's
-   copy and build again. It never drops text, so an overflow is visible on the page.
-4. Show the PDF (`out/report.pdf`). Also tell the account manager what `pack.missing` still lists and
-   which images did not load (the build prints both).
+   `changes` are the signed percent printed beside each figure. A change needs its figure: never send a
+   change alone.
+5. Compare each saved figure with the synced figure of the same key from step 1. **The screenshot
+   figure is the one the report prints.** Note every pair that differs by more than 10% for the final
+   message. If step 1's figure was already from a screenshot (saved earlier), there is no synced figure
+   to compare: say so.
 
-### 5. Changes
+### 3. Competitors
 
-The account manager asks for changes in plain words. Edit `copy.json` only, then run `build.py` and
-`check_figures.py` again and show the new PDF. A figure that looks wrong is not edited in the copy:
-say which figure, and check it at the source (the screenshot table, or the platform).
+For each competitor (the handles in `page.competitors.rows`, or `competitor_instagram` from
+`get_client_overview`), look up the Instagram follower count on the web. A public profile page gives
+it in its description ("2,870 Followers"). Note the page and today's date.
 
-### 6. Upload
+Call `save_competitor_followers` with
+`{clientRef, month, rows: [{handle, name?, followers, rounded?, sourceUrl?, readOn?}]}`.
+`followers` is a whole number. **When the profile shows the count only rounded ("38K"), save
+`followers: 38000` with `rounded: true`.** It prints as "~38K", and its "vs last month" shows a dash,
+because only exact counts are compared. Do not ask the account manager for an exact count.
 
-Only on the account manager's yes:
+### 4. Key dates
 
-1. `create_upload` with kind `report_deck`, `clientRef`, `month`, contentType `application/pdf` and the
-   file's `sizeBytes`. PUT the PDF bytes to the link.
-2. `upload_report_deck` with `{clientRef, month, uploadId}`. Poll `get_job` until `done`.
+Call `get_report_pack` again, now that the figures are saved. `page["looking-ahead"].keyDates` holds
+the client's planner dates for the next month (the account manager's and the planner agent's). Use
+them as they are. Only when that list is empty, write `keyDates` in the copy from the account
+manager's notes (`notes.keyDates`, `notes.lookAhead`, or the chat).
+
+### 5. Write the copy
+
+Write the copy for every page in `pack.pages` except `cover` (rules below; the shape is
+`copy.schema.json`; an example is `fixtures/sample-copy.json`). Name every post, video and ad by its
+`ref` from the pack (`ig1`, `fb2`, `tt1`, `ad1`), never by its `id`.
+
+### 6. Render
+
+1. Call `render_report` with `{clientRef, month, copy}`. Poll `get_job` until `done`.
+2. `result.rendered` false with `result.problems`: each problem names the page and what is wrong (an
+   unknown ref or placeholder, a missing takeaway, a number typed by hand, a page that ran over). Fix
+   **all** of them in the copy and call `render_report` again.
+3. `result.refused`: `report-sent` (the month's report was already sent) or `in-flight` (the platform
+   is building that month now), or `forbidden`. Tell the account manager; do not retry. `conflict`
+   means the deck changed while yours was being saved: call `render_report` once more.
+4. `result.rendered` true: `pdfUrl` (works for 7 days), `pages`, `revision`, `warnings`. A warning that
+   a page was shrunk to fit means its copy is long: shorten it and render again.
+
+Every render is saved as a new revision of the month's report in the app. Earlier revisions are kept.
+
+### 7. Final message
+
+Give the account manager:
+
+1. The PDF link (`pdfUrl`) and the revision number.
+2. A table of the screenshot figures you read: platform, figure, number, change.
+3. Every screenshot figure that differs from the synced figure by more than 10%: both numbers.
+4. What could not be filled: `pack.missing`, figures you left out, images that did not load, and any
+   competitor you could not read.
+
+### Changes
+
+The account manager asks for changes in plain words. Change the copy only, call `render_report` again
+and give the new link. A figure that looks wrong is not edited in the copy: say which figure, and check
+it at the source (the screenshot, or the platform).
 
 Nothing is sent to the client. The account manager sends the PDF themselves, from their own email.
 
-## Writing copy.json
+## Writing the copy
 
 ### What each page needs
 
 | Page | Fields |
 |---|---|
 | every page but `cover` | `takeaway` |
-| `instagram`, `facebook`, `tiktok` | `postNames`: `{post id: short name}` for the posts the pack lists |
+| `instagram`, `facebook`, `tiktok` | `postNames`: `{ref: short name}` for the posts the page lists |
 | `google-ads` | `nextLine`, optional: "Next: ..." |
-| `what-worked` | `posts`: `[{id, name, why, how}]` for the posts the pack lists, in its order |
+| `what-worked` | `posts`: `[{ref, name, why, how}]` for the posts the pack lists, in its order |
 | `content-insights` | `doMore`, `keep`, `rework` |
-| `looking-ahead` | `blocks`: `[{heading, text}]`, every one is shown; `keyDates`: `[{dateLabel, label}]`, optional |
-| top level | `omitPosts`: ids of pack posts to leave out |
+| `looking-ahead` | `blocks`: `[{heading, text}]`, every one is shown; `keyDates`: `[{dateLabel, label}]`, only when the pack has none |
+| top level | `omitPosts`: refs of pack posts to leave out |
 
 The pack decides which posts, ads and videos a page shows. You name them and may leave one out with
 `omitPosts`; you never pick other posts.
@@ -152,14 +162,13 @@ Every figure in your text goes in as a placeholder that names a key in `pack.fig
 - `{ig.views.change}` prints the same change without its sign, for "rose" or "fell" ("12.4%")
 - `{ig.views.prev}` prints last month's figure
 
-A takeaway with any digit outside a placeholder is refused by `build.py`. Other lines (`why`, `how`,
-blocks) are not refused, but `check_figures.py` lists any number in them that the pack does not hold,
-and the rule is the same: no hand-typed figures anywhere.
+A takeaway with any digit outside a placeholder is refused. In every other line (`why`, `how`, blocks),
+any printed number the pack does not hold is refused too. No hand-typed figures anywhere.
 
 ### Copy rules
 
-- One heading and **one short takeaway line** per page, directly under the heading. Aim for one line;
-  two at most (about 190 characters). The core point first.
+- One heading and **one short takeaway line** per page. Aim for one line; two at most (about 190
+  characters). The core point first.
 - Every comparison is against **last month**. Never against the same month last year or an average you
   worked out.
 - Report what happened and what is planned. Lead with the wins; pair a weak result with what we are
@@ -169,10 +178,9 @@ and the rule is the same: no hand-typed figures anywhere.
   format, its timing, a tag) or in its own figures. If nothing visible explains it, say what it showed
   and stop.
 - Use "rose" or "fell" with `{key.change}`, so a sign never doubles up ("fell -12%").
-- Looking ahead and every "planned" line come **only from the account manager's notes**: the notes in
-  the chat and `pack.notes` (`lookAhead`, `highlights`, `keyDates`). Do not add plans of your own. If
-  there are no notes, ask for them before writing that page. When the notes name dates, put them in
-  `keyDates` (they show in the left column, as in the template) rather than in a block.
+- Looking ahead and every "planned" line come **only from the account manager's notes**: the chat and
+  `pack.notes`. Do not add plans of your own. If there are no notes, ask for them before writing that
+  page; with nobody to ask, write only what the notes and key dates hold.
 - Speak as the agency to its client: "we", the client's name, plain words. UK spelling.
 - **No em dashes.** Use a colon, a comma or a full stop.
 - Post names are short and describe the post ("Ridge line carousel"), with no figures in them.
@@ -197,15 +205,13 @@ Never add sample data to fill a page.
 | `competitors` | Instagram followers for us and each competitor |
 | `looking-ahead` | key dates in a left column, then every plan block; without dates the blocks use the full width in two columns |
 
-Post and ad images sit in 4:5 frames, cropped to fill. None is wider than square.
-
 ## When something is off
 
-- `build.py` says a placeholder is unknown: check the key against `pack.figures`; the figure may not
+- A problem says a placeholder is unknown: check the key against `pack.figures`; the figure may not
   exist for this client this month. Rewrite the line without it.
 - `{key.mom}` or `{key.change}` is refused: the pack has no last-month figure for it. Do not compare.
-- An image shows as a grey block: the link was empty or failed. Call `get_report_pack` again for fresh
-  links (they last 7 days) and rebuild.
-- No Chrome found: install Chrome or Chromium, or set `CHROME_BIN`. `out/report.html` is already written.
+- A problem says a ref is unknown: use only the refs the pack lists on that page.
+- A warning says an image did not load: the stored image is gone or the link failed. The page shows a
+  neutral block; name it in the final message.
 - Never start the platform's own report run (`generate_report`, `build_report`, `start_report`) from
   this skill.

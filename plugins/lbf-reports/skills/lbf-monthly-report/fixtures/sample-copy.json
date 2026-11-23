@@ -13,23 +13,23 @@
     "instagram": {
       "takeaway": "Views fell {ig.views.change} to {ig.views} as organic views dropped, while followers grew {ig.followers.change}. Ads carried the month, and the ridge carousel and the forest Reel were the top posts.",
       "postNames": {
-        "pm_in1": "Ridge line carousel",
-        "pm_in2": "Forest single track Reel"
+        "ig1": "Ridge line carousel",
+        "ig2": "Forest single track Reel"
       }
     },
     "facebook": {
       "takeaway": "Views rose {fb.views.change} to {fb.views}, almost all from ads, while organic views fell {fb.views_organic.change}.",
       "postNames": {
-        "pm_fa1": "Ridge line carousel",
-        "pm_fa2": "Volunteers Reel"
+        "fb1": "Ridge line carousel",
+        "fb2": "Volunteers Reel"
       }
     },
     "tiktok": {
       "takeaway": "Video views rose {tt.views.change} to {tt.views}, led by the chest camera descent.",
       "postNames": {
-        "pm_ti1": "The new descent, chest camera",
-        "pm_ti2": "Race packing list",
-        "pm_ti3": "Sunrise at the start line"
+        "tt1": "The new descent, chest camera",
+        "tt2": "Race packing list",
+        "tt3": "Sunrise at the start line"
       }
     },
     "linkedin": {
@@ -42,22 +42,22 @@
       "takeaway": "The ridge line carousel had the best engagement rate of the month.",
       "posts": [
         {
-          "id": "pm_in1",
           "name": "Ridge line carousel",
           "why": "It showed the new aid station and the finish arch, the two things runners ask about most in the comments.",
-          "how": "One carousel per race distance in November, each with its own route photos."
+          "how": "One carousel per race distance in November, each with its own route photos.",
+          "ref": "ig1"
         },
         {
-          "id": "pm_in3",
           "name": "Route markers carousel",
           "why": "Saves were high, so people kept it to read again before race day.",
-          "how": "A second checklist post for the night before the race."
+          "how": "A second checklist post for the night before the race.",
+          "ref": "ig3"
         },
         {
-          "id": "pm_in2",
           "name": "Forest single track Reel",
           "why": "Movement from the first second and a clear trail hook.",
-          "how": "Two new trail Reels in November from fresh route footage."
+          "how": "Two new trail Reels in November from fresh route footage.",
+          "ref": "ig2"
         }
       ]
     },

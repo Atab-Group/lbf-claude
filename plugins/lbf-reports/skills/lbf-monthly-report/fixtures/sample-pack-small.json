@@ -257,7 +257,8 @@
         "likesDisplay": "131",
         "savesDisplay": "14",
         "sharesDisplay": "22",
-        "engagementRateDisplay": "6.9%"
+        "engagementRateDisplay": "6.9%",
+        "ref": "ig1"
       }
     },
     "instagram": {
@@ -281,7 +282,8 @@
           "likesDisplay": "131",
           "savesDisplay": "14",
           "sharesDisplay": "22",
-          "engagementRateDisplay": "6.9%"
+          "engagementRateDisplay": "6.9%",
+          "ref": "ig1"
         },
         {
           "id": "pm_in2",
@@ -296,7 +298,8 @@
           "likesDisplay": "98",
           "savesDisplay": "9",
           "sharesDisplay": "17",
-          "engagementRateDisplay": "5.9%"
+          "engagementRateDisplay": "5.9%",
+          "ref": "ig2"
         }
       ],
       "audienceLine": "25-34 (38%) · 52% women · W. Cape 51%"
@@ -322,7 +325,8 @@
           "likesDisplay": "21",
           "savesDisplay": "2",
           "sharesDisplay": "6",
-          "engagementRateDisplay": "2.2%"
+          "engagementRateDisplay": "2.2%",
+          "ref": "fb1"
         },
         {
           "id": "pm_fa2",
@@ -337,7 +341,8 @@
           "likesDisplay": "1",
           "savesDisplay": "0",
           "sharesDisplay": "1",
-          "engagementRateDisplay": "2.2%"
+          "engagementRateDisplay": "2.2%",
+          "ref": "fb2"
         }
       ],
       "audienceLine": "South Africa 91% · Cape Town 44%"
@@ -357,7 +362,8 @@
           "likesDisplay": "131",
           "savesDisplay": "14",
           "sharesDisplay": "22",
-          "engagementRateDisplay": "6.9%"
+          "engagementRateDisplay": "6.9%",
+          "ref": "ig1"
         },
         {
           "id": "pm_in3",
@@ -372,7 +378,8 @@
           "likesDisplay": "58",
           "savesDisplay": "11",
           "sharesDisplay": "6",
-          "engagementRateDisplay": "6.3%"
+          "engagementRateDisplay": "6.3%",
+          "ref": "ig3"
         }
       ],
       "footLine": "Eng. rate = likes + saves + shares, divided by views"

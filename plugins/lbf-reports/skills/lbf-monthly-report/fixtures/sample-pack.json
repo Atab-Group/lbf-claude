@@ -649,7 +649,8 @@
         "likesDisplay": "131",
         "savesDisplay": "14",
         "sharesDisplay": "22",
-        "engagementRateDisplay": "6.9%"
+        "engagementRateDisplay": "6.9%",
+        "ref": "ig1"
       }
     },
     "meta-ads": {
@@ -681,35 +682,40 @@
           "name": "Forest Route Reel",
           "imageUrl": "images/post-2.png",
           "line1": "R1,884.20 spend",
-          "line2": "31 purchases · R61"
+          "line2": "31 purchases · R61",
+          "ref": "ad1"
         },
         {
           "id": "ad_2",
           "name": "Early Entry Countdown",
           "imageUrl": "images/post-wide.png",
           "line1": "R1,102.75 spend",
-          "line2": "14 purchases · R79"
+          "line2": "14 purchases · R79",
+          "ref": "ad2"
         },
         {
           "id": "ad_3",
           "name": "Finish Line Reel",
           "imageUrl": "images/post-3.png",
           "line1": "R803.40 spend",
-          "line2": "9 purchases · R89"
+          "line2": "9 purchases · R89",
+          "ref": "ad3"
         },
         {
           "id": "ad_4",
           "name": "Night Run Teaser With A Very Long Ad Name For Testing",
           "imageUrl": "images/post-5.png",
           "line1": "R521.15 spend",
-          "line2": "7 purchases · R74"
+          "line2": "7 purchases · R74",
+          "ref": "ad4"
         },
         {
           "id": "ad_5",
           "name": "Volunteer Thank You",
           "imageUrl": null,
           "line1": "R321.00 spend",
-          "line2": "3 purchases · R107"
+          "line2": "3 purchases · R107",
+          "ref": "ad5"
         }
       ],
       "footLine": "October 2026 · MoM is against September 2026 · top five ads by spend, with cost per purchase"
@@ -810,7 +816,8 @@
           "likesDisplay": "131",
           "savesDisplay": "14",
           "sharesDisplay": "22",
-          "engagementRateDisplay": "6.9%"
+          "engagementRateDisplay": "6.9%",
+          "ref": "ig1"
         },
         {
           "id": "pm_in2",
@@ -825,7 +832,8 @@
           "likesDisplay": "98",
           "savesDisplay": "9",
           "sharesDisplay": "17",
-          "engagementRateDisplay": "5.9%"
+          "engagementRateDisplay": "5.9%",
+          "ref": "ig2"
         }
       ],
       "audienceLine": "25-34 (38%) · 52% women · W. Cape 51%"
@@ -851,7 +859,8 @@
           "likesDisplay": "21",
           "savesDisplay": "2",
           "sharesDisplay": "6",
-          "engagementRateDisplay": "2.2%"
+          "engagementRateDisplay": "2.2%",
+          "ref": "fb1"
         },
         {
           "id": "pm_fa2",
@@ -866,7 +875,8 @@
           "likesDisplay": "17",
           "savesDisplay": "0",
           "sharesDisplay": "4",
-          "engagementRateDisplay": "2.2%"
+          "engagementRateDisplay": "2.2%",
+          "ref": "fb2"
         }
       ],
       "audienceLine": "South Africa 91% · Cape Town 44%"
@@ -922,7 +932,8 @@
           "likesDisplay": "1,472",
           "savesDisplay": "122",
           "sharesDisplay": "141",
-          "engagementRateDisplay": "9.2%"
+          "engagementRateDisplay": "9.2%",
+          "ref": "tt1"
         },
         {
           "id": "pm_ti2",
@@ -937,7 +948,8 @@
           "likesDisplay": "806",
           "savesDisplay": "77",
           "sharesDisplay": "89",
-          "engagementRateDisplay": "8.6%"
+          "engagementRateDisplay": "8.6%",
+          "ref": "tt2"
         },
         {
           "id": "pm_ti3",
@@ -952,7 +964,8 @@
           "likesDisplay": "551",
           "savesDisplay": "38",
           "sharesDisplay": "44",
-          "engagementRateDisplay": "7.5%"
+          "engagementRateDisplay": "7.5%",
+          "ref": "tt3"
         }
       ]
     },
@@ -1091,7 +1104,8 @@
           "likesDisplay": "131",
           "savesDisplay": "14",
           "sharesDisplay": "22",
-          "engagementRateDisplay": "6.9%"
+          "engagementRateDisplay": "6.9%",
+          "ref": "ig1"
         },
         {
           "id": "pm_in3",
@@ -1106,7 +1120,8 @@
           "likesDisplay": "58",
           "savesDisplay": "11",
           "sharesDisplay": "6",
-          "engagementRateDisplay": "6.3%"
+          "engagementRateDisplay": "6.3%",
+          "ref": "ig3"
         },
         {
           "id": "pm_in2",
@@ -1121,7 +1136,8 @@
           "likesDisplay": "98",
           "savesDisplay": "9",
           "sharesDisplay": "17",
-          "engagementRateDisplay": "5.9%"
+          "engagementRateDisplay": "5.9%",
+          "ref": "ig2"
         }
       ],
       "footLine": "Eng. rate = likes + saves + shares, divided by views"
