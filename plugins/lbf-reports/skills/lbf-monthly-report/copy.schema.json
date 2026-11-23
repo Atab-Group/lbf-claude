@@ -1,0 +1,341 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "LBF monthly report copy",
+  "type": "object",
+  "properties": {
+    "pages": {
+      "type": "object",
+      "properties": {
+        "key-outcomes": {
+          "type": "object",
+          "properties": {
+            "takeaway": {
+              "type": "string",
+              "maxLength": 400,
+              "description": "One short line under the page heading, about 190 characters at most. Every figure goes in as a placeholder: {ig.views}, {ig.views.mom}, {ig.views.change}, {ig.views.prev}. No digit outside a placeholder."
+            }
+          },
+          "required": [
+            "takeaway"
+          ],
+          "additionalProperties": false
+        },
+        "meta-ads": {
+          "type": "object",
+          "properties": {
+            "takeaway": {
+              "type": "string",
+              "maxLength": 400,
+              "description": "One short line under the page heading, about 190 characters at most. Every figure goes in as a placeholder: {ig.views}, {ig.views.mom}, {ig.views.change}, {ig.views.prev}. No digit outside a placeholder."
+            }
+          },
+          "required": [
+            "takeaway"
+          ],
+          "additionalProperties": false
+        },
+        "google-ads": {
+          "type": "object",
+          "properties": {
+            "takeaway": {
+              "type": "string",
+              "maxLength": 400,
+              "description": "One short line under the page heading, about 190 characters at most. Every figure goes in as a placeholder: {ig.views}, {ig.views.mom}, {ig.views.change}, {ig.views.prev}. No digit outside a placeholder."
+            },
+            "nextLine": {
+              "type": "string",
+              "maxLength": 600,
+              "description": "Optional line under the campaign table: \"Next: ...\"."
+            }
+          },
+          "required": [
+            "takeaway"
+          ],
+          "additionalProperties": false
+        },
+        "instagram": {
+          "type": "object",
+          "properties": {
+            "takeaway": {
+              "type": "string",
+              "maxLength": 400,
+              "description": "One short line under the page heading, about 190 characters at most. Every figure goes in as a placeholder: {ig.views}, {ig.views.mom}, {ig.views.change}, {ig.views.prev}. No digit outside a placeholder."
+            },
+            "postNames": {
+              "type": "object",
+              "propertyNames": {
+                "type": "string",
+                "pattern": "^(ig|fb|tt|li|ad)[1-9]\\d{0,2}$",
+                "description": "A post or ad ref from the pack, such as ig1, fb2, tt1 or ad3."
+              },
+              "additionalProperties": {
+                "type": "string",
+                "maxLength": 80
+              },
+              "description": "A short name for each post the pack lists on this page, keyed by its ref: {\"ig1\": \"Ridge line carousel\"}. No figures in a name."
+            }
+          },
+          "required": [
+            "takeaway"
+          ],
+          "additionalProperties": false
+        },
+        "facebook": {
+          "type": "object",
+          "properties": {
+            "takeaway": {
+              "type": "string",
+              "maxLength": 400,
+              "description": "One short line under the page heading, about 190 characters at most. Every figure goes in as a placeholder: {ig.views}, {ig.views.mom}, {ig.views.change}, {ig.views.prev}. No digit outside a placeholder."
+            },
+            "postNames": {
+              "type": "object",
+              "propertyNames": {
+                "type": "string",
+                "pattern": "^(ig|fb|tt|li|ad)[1-9]\\d{0,2}$",
+                "description": "A post or ad ref from the pack, such as ig1, fb2, tt1 or ad3."
+              },
+              "additionalProperties": {
+                "type": "string",
+                "maxLength": 80
+              },
+              "description": "A short name for each post the pack lists on this page, keyed by its ref: {\"ig1\": \"Ridge line carousel\"}. No figures in a name."
+            }
+          },
+          "required": [
+            "takeaway"
+          ],
+          "additionalProperties": false
+        },
+        "tiktok": {
+          "type": "object",
+          "properties": {
+            "takeaway": {
+              "type": "string",
+              "maxLength": 400,
+              "description": "One short line under the page heading, about 190 characters at most. Every figure goes in as a placeholder: {ig.views}, {ig.views.mom}, {ig.views.change}, {ig.views.prev}. No digit outside a placeholder."
+            },
+            "postNames": {
+              "type": "object",
+              "propertyNames": {
+                "type": "string",
+                "pattern": "^(ig|fb|tt|li|ad)[1-9]\\d{0,2}$",
+                "description": "A post or ad ref from the pack, such as ig1, fb2, tt1 or ad3."
+              },
+              "additionalProperties": {
+                "type": "string",
+                "maxLength": 80
+              },
+              "description": "A short name for each post the pack lists on this page, keyed by its ref: {\"ig1\": \"Ridge line carousel\"}. No figures in a name."
+            }
+          },
+          "required": [
+            "takeaway"
+          ],
+          "additionalProperties": false
+        },
+        "linkedin": {
+          "type": "object",
+          "properties": {
+            "takeaway": {
+              "type": "string",
+              "maxLength": 400,
+              "description": "One short line under the page heading, about 190 characters at most. Every figure goes in as a placeholder: {ig.views}, {ig.views.mom}, {ig.views.change}, {ig.views.prev}. No digit outside a placeholder."
+            }
+          },
+          "required": [
+            "takeaway"
+          ],
+          "additionalProperties": false
+        },
+        "emailers": {
+          "type": "object",
+          "properties": {
+            "takeaway": {
+              "type": "string",
+              "maxLength": 400,
+              "description": "One short line under the page heading, about 190 characters at most. Every figure goes in as a placeholder: {ig.views}, {ig.views.mom}, {ig.views.change}, {ig.views.prev}. No digit outside a placeholder."
+            }
+          },
+          "required": [
+            "takeaway"
+          ],
+          "additionalProperties": false
+        },
+        "what-worked": {
+          "type": "object",
+          "properties": {
+            "takeaway": {
+              "type": "string",
+              "maxLength": 400,
+              "description": "One short line under the page heading, about 190 characters at most. Every figure goes in as a placeholder: {ig.views}, {ig.views.mom}, {ig.views.change}, {ig.views.prev}. No digit outside a placeholder."
+            },
+            "posts": {
+              "description": "The posts the pack lists on this page, in its order, each named by ref.",
+              "maxItems": 3,
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "ref": {
+                    "type": "string",
+                    "pattern": "^(ig|fb|tt|li|ad)[1-9]\\d{0,2}$",
+                    "description": "A post or ad ref from the pack, such as ig1, fb2, tt1 or ad3."
+                  },
+                  "name": {
+                    "type": "string",
+                    "maxLength": 80
+                  },
+                  "why": {
+                    "type": "string",
+                    "maxLength": 600,
+                    "description": "Why it worked: something visible in the post or in its own figures."
+                  },
+                  "how": {
+                    "type": "string",
+                    "maxLength": 600,
+                    "description": "How we do more of it."
+                  }
+                },
+                "required": [
+                  "ref",
+                  "why",
+                  "how"
+                ],
+                "additionalProperties": false
+              }
+            }
+          },
+          "required": [
+            "takeaway"
+          ],
+          "additionalProperties": false
+        },
+        "content-insights": {
+          "type": "object",
+          "properties": {
+            "takeaway": {
+              "type": "string",
+              "maxLength": 400,
+              "description": "One short line under the page heading, about 190 characters at most. Every figure goes in as a placeholder: {ig.views}, {ig.views.mom}, {ig.views.change}, {ig.views.prev}. No digit outside a placeholder."
+            },
+            "doMore": {
+              "type": "string",
+              "maxLength": 600,
+              "description": "Do more."
+            },
+            "keep": {
+              "type": "string",
+              "maxLength": 600,
+              "description": "Keep."
+            },
+            "rework": {
+              "type": "string",
+              "maxLength": 600,
+              "description": "Rework."
+            }
+          },
+          "required": [
+            "takeaway"
+          ],
+          "additionalProperties": false
+        },
+        "competitors": {
+          "type": "object",
+          "properties": {
+            "takeaway": {
+              "type": "string",
+              "maxLength": 400,
+              "description": "One short line under the page heading, about 190 characters at most. Every figure goes in as a placeholder: {ig.views}, {ig.views.mom}, {ig.views.change}, {ig.views.prev}. No digit outside a placeholder."
+            }
+          },
+          "required": [
+            "takeaway"
+          ],
+          "additionalProperties": false
+        },
+        "looking-ahead": {
+          "type": "object",
+          "properties": {
+            "takeaway": {
+              "type": "string",
+              "maxLength": 400,
+              "description": "One short line under the page heading, about 190 characters at most. Every figure goes in as a placeholder: {ig.views}, {ig.views.mom}, {ig.views.change}, {ig.views.prev}. No digit outside a placeholder."
+            },
+            "blocks": {
+              "description": "Every block is shown.",
+              "maxItems": 6,
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "heading": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 60
+                  },
+                  "text": {
+                    "type": "string",
+                    "maxLength": 600,
+                    "description": "The plan, from the account manager's notes only."
+                  }
+                },
+                "required": [
+                  "heading",
+                  "text"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "keyDates": {
+              "description": "Only when the pack has no key dates: dates from the account manager's look-ahead notes.",
+              "maxItems": 10,
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "dateLabel": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 40
+                  },
+                  "label": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 120
+                  }
+                },
+                "required": [
+                  "dateLabel",
+                  "label"
+                ],
+                "additionalProperties": false
+              }
+            }
+          },
+          "required": [
+            "takeaway"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false,
+      "description": "One entry per page in the pack's pages list, except cover."
+    },
+    "omitPosts": {
+      "description": "Refs of pack posts or ads to leave out.",
+      "maxItems": 20,
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^(ig|fb|tt|li|ad)[1-9]\\d{0,2}$",
+        "description": "A post or ad ref from the pack, such as ig1, fb2, tt1 or ad3."
+      }
+    }
+  },
+  "required": [
+    "pages"
+  ],
+  "additionalProperties": false,
+  "description": "The words of one client's monthly report. The server fills the template with them and the pack's figures."
+}

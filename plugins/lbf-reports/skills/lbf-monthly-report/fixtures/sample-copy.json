@@ -1,0 +1,92 @@
+{
+  "pages": {
+    "key-outcomes": {
+      "takeaway": "Meta ads returned {meta.roas} on {meta.spend} spend, and followers grew on every channel."
+    },
+    "meta-ads": {
+      "takeaway": "Every rand spent returned {meta.roas}, and the forest Reel brought the most purchases."
+    },
+    "google-ads": {
+      "takeaway": "Brand search converted cheapest, and conversions rose {google.conversions.change} on last month.",
+      "nextLine": "Next: hold Performance Max at its current budget and watch cost per conversion."
+    },
+    "instagram": {
+      "takeaway": "Views fell {ig.views.change} to {ig.views} as organic views dropped, while followers grew {ig.followers.change}. Ads carried the month, and the ridge carousel and the forest Reel were the top posts.",
+      "postNames": {
+        "ig1": "Ridge line carousel",
+        "ig2": "Forest single track Reel"
+      }
+    },
+    "facebook": {
+      "takeaway": "Views rose {fb.views.change} to {fb.views}, almost all from ads, while organic views fell {fb.views_organic.change}.",
+      "postNames": {
+        "fb1": "Ridge line carousel",
+        "fb2": "Volunteers Reel"
+      }
+    },
+    "tiktok": {
+      "takeaway": "Video views rose {tt.views.change} to {tt.views}, led by the chest camera descent.",
+      "postNames": {
+        "tt1": "The new descent, chest camera",
+        "tt2": "Race packing list",
+        "tt3": "Sunrise at the start line"
+      }
+    },
+    "linkedin": {
+      "takeaway": "Partner news earned the most views, and impressions rose {li.impressions.change}."
+    },
+    "emailers": {
+      "takeaway": "Open rate ({email.open_rate}) and click rate ({email.click_rate}) both beat the industry average."
+    },
+    "what-worked": {
+      "takeaway": "The ridge line carousel had the best engagement rate of the month.",
+      "posts": [
+        {
+          "name": "Ridge line carousel",
+          "why": "It showed the new aid station and the finish arch, the two things runners ask about most in the comments.",
+          "how": "One carousel per race distance in November, each with its own route photos.",
+          "ref": "ig1"
+        },
+        {
+          "name": "Route markers carousel",
+          "why": "Saves were high, so people kept it to read again before race day.",
+          "how": "A second checklist post for the night before the race.",
+          "ref": "ig3"
+        },
+        {
+          "name": "Forest single track Reel",
+          "why": "Movement from the first second and a clear trail hook.",
+          "how": "Two new trail Reels in November from fresh route footage.",
+          "ref": "ig2"
+        }
+      ]
+    },
+    "content-insights": {
+      "takeaway": "Route and scenery posts led on reach and engagement, and Reels beat every other format.",
+      "doMore": "Route and scenery as Reels. Best pillar, best format.",
+      "keep": "Countdown posts. Steady reach and they carry the entry message.",
+      "rework": "Training tips as short Reels. Static tips reach the fewest people."
+    },
+    "competitors": {
+      "takeaway": "We have {ig.followers} Instagram followers, and grew faster than two of the three accounts we track."
+    },
+    "looking-ahead": {
+      "takeaway": "November is the last full month of entries: the push is to turn interest into sign-ups.",
+      "blocks": [
+        {
+          "heading": "Content",
+          "text": "Weekly route reveal videos, countdown posts and runner stories. The early entry close goes out on every channel."
+        },
+        {
+          "heading": "Entries",
+          "text": "A reminder email and a paid push in the week before early entry closes."
+        },
+        {
+          "heading": "Community",
+          "text": "Volunteer call-outs and a training run with the local club build interest into December."
+        }
+      ]
+    }
+  },
+  "omitPosts": []
+}

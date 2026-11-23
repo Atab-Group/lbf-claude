@@ -1,0 +1,17 @@
+{
+  "$schema": "https://anthropic.com/claude-code/plugin.schema.json",
+  "name": "lbf-reports",
+  "displayName": "LBF Monthly Reports",
+  "description": "Build a Let's Be Frank client's monthly social media report as a PDF. Needs the lbf plugin, which holds the connection to the platform.",
+  "author": {
+    "name": "Atab"
+  },
+  "homepage": "https://lbf-reporting-platform.vercel.app",
+  "repository": "https://github.com/Atab-Group/lbf-claude",
+  "keywords": [
+    "lbf",
+    "reporting",
+    "social-media",
+    "monthly-report"
+  ]
+}
