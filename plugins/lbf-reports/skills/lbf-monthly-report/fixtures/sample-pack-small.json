@@ -1,0 +1,430 @@
+{
+  "schemaVersion": 1,
+  "client": {
+    "slug": "sample-trail-run",
+    "name": "Sample Trail Run",
+    "logoUrl": "images/logo.svg"
+  },
+  "month": "2026-10",
+  "monthLabel": "October 2026",
+  "prevMonthLabel": "September 2026",
+  "dataAsOf": "31 October 2026",
+  "pages": [
+    "cover",
+    "key-outcomes",
+    "instagram",
+    "facebook",
+    "what-worked",
+    "competitors",
+    "looking-ahead"
+  ],
+  "missing": [
+    {
+      "key": "screenshot.facebook",
+      "message": "Facebook Content overview screenshot figures are not saved yet."
+    }
+  ],
+  "notes": {
+    "highlights": [
+      "Entries opened for the December race."
+    ],
+    "lookAhead": "November is the last full month of entries. Push the early entry close and the new forest route.",
+    "keyDates": [
+      {
+        "dateLabel": "November",
+        "label": "Route reveal videos, one a week"
+      },
+      {
+        "dateLabel": "15 November",
+        "label": "Early entry closes"
+      },
+      {
+        "dateLabel": "5 December",
+        "label": "Race day"
+      }
+    ]
+  },
+  "figures": {
+    "ig.followers": {
+      "value": 6820,
+      "display": "6,820",
+      "mom": {
+        "display": "+3.1%",
+        "direction": "up"
+      },
+      "prev": {
+        "display": "6,615"
+      },
+      "source": "windsor"
+    },
+    "ig.new_followers": {
+      "value": 205,
+      "display": "+205",
+      "mom": {
+        "display": "+17.8%",
+        "direction": "up"
+      },
+      "prev": {
+        "display": "174"
+      },
+      "source": "windsor"
+    },
+    "ig.views": {
+      "value": 73480,
+      "display": "73.5K",
+      "mom": {
+        "display": "-12.4%",
+        "direction": "down"
+      },
+      "prev": {
+        "display": "83.9K"
+      },
+      "source": "screenshot"
+    },
+    "ig.views_organic": {
+      "value": 28140,
+      "display": "28.1K",
+      "mom": {
+        "display": "-30.2%",
+        "direction": "down"
+      },
+      "prev": {
+        "display": "40.3K"
+      },
+      "source": "screenshot"
+    },
+    "ig.views_ads": {
+      "value": 45340,
+      "display": "45.3K",
+      "mom": {
+        "display": "+4.0%",
+        "direction": "up"
+      },
+      "prev": {
+        "display": "43.6K"
+      },
+      "source": "screenshot"
+    },
+    "ig.reach": {
+      "value": 16900,
+      "display": "16.9K",
+      "mom": {
+        "display": "-8.7%",
+        "direction": "down"
+      },
+      "prev": {
+        "display": "18.5K"
+      },
+      "source": "screenshot"
+    },
+    "ig.interactions": {
+      "value": 1042,
+      "display": "1,042",
+      "mom": {
+        "display": "+6.3%",
+        "direction": "up"
+      },
+      "prev": {
+        "display": "980"
+      },
+      "source": "screenshot"
+    },
+    "fb.followers": {
+      "value": 5260,
+      "display": "5,260",
+      "mom": {
+        "display": "+0.9%",
+        "direction": "up"
+      },
+      "prev": {
+        "display": "5,213"
+      },
+      "source": "windsor"
+    },
+    "fb.new_followers": {
+      "value": 47,
+      "display": "+47",
+      "mom": {
+        "display": "-21.7%",
+        "direction": "down"
+      },
+      "prev": {
+        "display": "60"
+      },
+      "source": "windsor"
+    },
+    "fb.views": {
+      "value": 98200,
+      "display": "98.2K",
+      "mom": {
+        "display": "+64.0%",
+        "direction": "up"
+      },
+      "prev": {
+        "display": "59.9K"
+      },
+      "source": "screenshot"
+    },
+    "fb.views_organic": {
+      "value": 7810,
+      "display": "7,810",
+      "mom": {
+        "display": "-18.9%",
+        "direction": "down"
+      },
+      "prev": {
+        "display": "9,630"
+      },
+      "source": "screenshot"
+    },
+    "fb.views_ads": {
+      "value": 90390,
+      "display": "90.4K",
+      "mom": {
+        "display": "+79.8%",
+        "direction": "up"
+      },
+      "prev": {
+        "display": "50.3K"
+      },
+      "source": "screenshot"
+    },
+    "fb.viewers": {
+      "value": 24100,
+      "display": "24.1K",
+      "mom": {
+        "display": "+52.5%",
+        "direction": "up"
+      },
+      "prev": {
+        "display": "15.8K"
+      },
+      "source": "screenshot"
+    },
+    "fb.interactions": {
+      "value": 388,
+      "display": "388",
+      "mom": {
+        "display": "+22.0%",
+        "direction": "up"
+      },
+      "prev": {
+        "display": "318"
+      },
+      "source": "screenshot"
+    },
+    "fb.watch_time": {
+      "value": 11160,
+      "display": "3h 6m",
+      "mom": {
+        "display": "-9.5%",
+        "direction": "down"
+      },
+      "prev": {
+        "display": "3h 26m"
+      },
+      "source": "screenshot"
+    }
+  },
+  "page": {
+    "key-outcomes": {
+      "channelTiles": [
+        {
+          "label": "Instagram",
+          "tag": "Followers",
+          "figure": "ig.followers",
+          "subLine": "+205 from 6,615"
+        },
+        {
+          "label": "Facebook",
+          "tag": "Followers",
+          "figure": "fb.followers",
+          "subLine": "+47 from 5,213"
+        }
+      ],
+      "paidTiles": [],
+      "topPost": {
+        "id": "pm_in1",
+        "platform": "instagram",
+        "dateLabel": "24 Oct",
+        "format": "Carousel",
+        "caption": "Ridge line at first light, with the new aid station on the climb and the finish arch going up",
+        "imageUrl": "images/post-1.png",
+        "permalink": "https://example.com/post",
+        "viewsDisplay": "2.4K",
+        "reachDisplay": "1,906",
+        "likesDisplay": "131",
+        "savesDisplay": "14",
+        "sharesDisplay": "22",
+        "engagementRateDisplay": "6.9%"
+      }
+    },
+    "instagram": {
+      "screenshotUrl": "images/overview-instagram.png",
+      "followersTile": {
+        "new": "ig.new_followers",
+        "total": "ig.followers",
+        "subLine": "vs 174 gained in September"
+      },
+      "posts": [
+        {
+          "id": "pm_in1",
+          "platform": "instagram",
+          "dateLabel": "24 Oct",
+          "format": "Carousel",
+          "caption": "Ridge line at first light, with the new aid station on the climb and the finish arch going up",
+          "imageUrl": "images/post-1.png",
+          "permalink": "https://example.com/post",
+          "viewsDisplay": "2.4K",
+          "reachDisplay": "1,906",
+          "likesDisplay": "131",
+          "savesDisplay": "14",
+          "sharesDisplay": "22",
+          "engagementRateDisplay": "6.9%"
+        },
+        {
+          "id": "pm_in2",
+          "platform": "instagram",
+          "dateLabel": "17 Oct",
+          "format": "Reel",
+          "caption": "Twenty seconds of the forest single track at race pace",
+          "imageUrl": "images/post-wide.png",
+          "permalink": "https://example.com/post",
+          "viewsDisplay": "2.1K",
+          "reachDisplay": "1,722",
+          "likesDisplay": "98",
+          "savesDisplay": "9",
+          "sharesDisplay": "17",
+          "engagementRateDisplay": "5.9%"
+        }
+      ],
+      "audienceLine": "25-34 (38%) · 52% women · W. Cape 51%"
+    },
+    "facebook": {
+      "screenshotUrl": null,
+      "followersTile": {
+        "new": "fb.new_followers",
+        "total": "fb.followers",
+        "subLine": "vs 60 gained in September"
+      },
+      "posts": [
+        {
+          "id": "pm_fa1",
+          "platform": "facebook",
+          "dateLabel": "24 Oct",
+          "format": "Carousel",
+          "caption": "Ridge line at first light, with the new aid station on the climb",
+          "imageUrl": "images/post-1.png",
+          "permalink": "https://example.com/post",
+          "viewsDisplay": "1.3K",
+          "reachDisplay": "1,012",
+          "likesDisplay": "21",
+          "savesDisplay": "2",
+          "sharesDisplay": "6",
+          "engagementRateDisplay": "2.2%"
+        },
+        {
+          "id": "pm_fa2",
+          "platform": "facebook",
+          "dateLabel": "10 Oct",
+          "format": "Reel",
+          "caption": "Meet the volunteers who mark the route",
+          "imageUrl": "images/post-3.png",
+          "permalink": "https://example.com/post",
+          "viewsDisplay": "940",
+          "reachDisplay": "811",
+          "likesDisplay": "17",
+          "savesDisplay": "0",
+          "sharesDisplay": "4",
+          "engagementRateDisplay": "2.2%"
+        }
+      ],
+      "audienceLine": "South Africa 91% · Cape Town 44%"
+    },
+    "what-worked": {
+      "posts": [
+        {
+          "id": "pm_in1",
+          "platform": "instagram",
+          "dateLabel": "24 Oct",
+          "format": "Carousel",
+          "caption": "Ridge line at first light, with the new aid station on the climb and the finish arch going up",
+          "imageUrl": "images/post-1.png",
+          "permalink": "https://example.com/post",
+          "viewsDisplay": "2.4K",
+          "reachDisplay": "1,906",
+          "likesDisplay": "131",
+          "savesDisplay": "14",
+          "sharesDisplay": "22",
+          "engagementRateDisplay": "6.9%"
+        },
+        {
+          "id": "pm_in3",
+          "platform": "instagram",
+          "dateLabel": "29 Oct",
+          "format": "Carousel",
+          "caption": "Five route markers you will pass on race day",
+          "imageUrl": "images/post-6.png",
+          "permalink": "https://example.com/post",
+          "viewsDisplay": "1.2K",
+          "reachDisplay": "1,030",
+          "likesDisplay": "58",
+          "savesDisplay": "11",
+          "sharesDisplay": "6",
+          "engagementRateDisplay": "6.3%"
+        }
+      ],
+      "footLine": "Eng. rate = likes + saves + shares, divided by views"
+    },
+    "competitors": {
+      "rows": [
+        {
+          "name": "Sample Trail Run (us)",
+          "handle": "@sampletrailrun",
+          "followersDisplay": "6,820",
+          "changeDisplay": "+205",
+          "isUs": true
+        },
+        {
+          "name": "Example Mountain Series",
+          "handle": "@examplemountain",
+          "followersDisplay": "14,300",
+          "changeDisplay": "+310",
+          "isUs": false
+        },
+        {
+          "name": "Demo Coastal Ultra",
+          "handle": "@democoastal",
+          "followersDisplay": "9,155",
+          "changeDisplay": "+88",
+          "isUs": false
+        },
+        {
+          "name": "Placeholder Night Run",
+          "handle": "@placeholdernight",
+          "followersDisplay": "3,470",
+          "changeDisplay": null,
+          "isUs": false
+        }
+      ],
+      "footLine": "Follower counts are read from each public Instagram profile · read on 2 November 2026 · vs last month uses the figure saved the month before"
+    },
+    "looking-ahead": {
+      "keyDates": [
+        {
+          "dateLabel": "November",
+          "label": "Route reveal videos, one a week"
+        },
+        {
+          "dateLabel": "15 November",
+          "label": "Early entry closes"
+        },
+        {
+          "dateLabel": "5 December",
+          "label": "Race day"
+        }
+      ],
+      "footLine": "Plan for November 2026"
+    }
+  }
+}

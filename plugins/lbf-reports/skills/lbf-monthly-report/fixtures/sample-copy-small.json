@@ -1,0 +1,59 @@
+{
+  "pages": {
+    "key-outcomes": {
+      "takeaway": "Instagram followers grew {ig.followers.change} and Facebook followers grew {fb.followers.change} on last month."
+    },
+    "instagram": {
+      "takeaway": "Views fell {ig.views.change} to {ig.views} as organic views dropped, while followers grew {ig.followers.change}. Ads carried the month, and the ridge carousel and the forest Reel were the top posts.",
+      "postNames": {
+        "pm_in1": "Ridge line carousel",
+        "pm_in2": "Forest single track Reel"
+      }
+    },
+    "facebook": {
+      "takeaway": "Views rose {fb.views.change} to {fb.views}, almost all from ads, while organic views fell {fb.views_organic.change}.",
+      "postNames": {
+        "pm_fa1": "Ridge line carousel",
+        "pm_fa2": "Volunteers Reel"
+      }
+    },
+    "what-worked": {
+      "takeaway": "The ridge line carousel had the best engagement rate of the month.",
+      "posts": [
+        {
+          "id": "pm_in1",
+          "name": "Ridge line carousel",
+          "why": "It showed the new aid station and the finish arch, the two things runners ask about most in the comments.",
+          "how": "One carousel per race distance in November, each with its own route photos."
+        },
+        {
+          "id": "pm_in3",
+          "name": "Route markers carousel",
+          "why": "Saves were high, so people kept it to read again before race day.",
+          "how": "A second checklist post for the night before the race."
+        }
+      ]
+    },
+    "competitors": {
+      "takeaway": "We have {ig.followers} Instagram followers, and grew faster than two of the three accounts we track."
+    },
+    "looking-ahead": {
+      "takeaway": "November is the last full month of entries: the push is to turn interest into sign-ups.",
+      "blocks": [
+        {
+          "heading": "Content",
+          "text": "Weekly route reveal videos, countdown posts and runner stories. The early entry close goes out on every channel."
+        },
+        {
+          "heading": "Entries",
+          "text": "A reminder email and a paid push in the week before early entry closes."
+        },
+        {
+          "heading": "Community",
+          "text": "Volunteer call-outs and a training run with the local club build interest into December."
+        }
+      ]
+    }
+  },
+  "omitPosts": []
+}
