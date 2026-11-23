@@ -52,4 +52,44 @@ plugins/lbf/
 Server: `https://lbf-reporting-platform.vercel.app/api/mcp/mcp`. Bump `version` in
 `.codex-plugin/plugin.json` on every change, because Codex caches plugins by version.
 
+## Monthly reports plugin: `lbf-reports`
+
+A second plugin in the same marketplace. Its one skill, `lbf-monthly-report`, builds a client's monthly
+social media report as a PDF in the agency's 13-page layout. The account manager says "build the October
+report for <client>", attaches the two Meta Business Suite Content overview screenshots and any notes,
+confirms one table of figures, and gets the PDF. Every figure comes from the platform's report pack;
+Claude writes only the words.
+
+It uses the same MCP server and the same key as `lbf`. Install it beside `lbf`:
+
+```
+claude plugin install lbf-reports@lbf --scope user
+echo '{"api_key":"<your lbf_ key>"}' | claude plugin configure lbf-reports@lbf --values-stdin
+```
+
+In Codex: `codex plugin add lbf-reports@lbf` (it reads the same `LBF_API_KEY`).
+
+The machine needs Python 3, Chrome or Chromium (or `CHROME_BIN` pointing at one) and `pdftotext`
+(poppler-utils). To see the layout without the platform, build the fictional sample:
+
+```
+cd plugins/lbf-reports/skills/lbf-monthly-report
+python3 template/build.py --pack fixtures/sample-pack.json --copy fixtures/sample-copy.json --out /tmp/sample
+python3 template/check_figures.py --pack fixtures/sample-pack.json --pdf /tmp/sample/report.pdf
+```
+
+```
+plugins/lbf-reports/
+  .claude-plugin/plugin.json, .mcp.json        Claude Code manifest and MCP server (same as lbf)
+  .codex-plugin/plugin.json, codex.mcp.json    Codex manifest and MCP server (same as lbf)
+  skills/lbf-monthly-report/
+    SKILL.md                                   the steps and the copy rules
+    pack.schema.json                           the pack and copy.json contract
+    template/report.html                       the 13 page layouts, fonts embedded
+    template/build.py                          pack + copy to report.html and report.pdf
+    template/check_figures.py                  every number in the PDF must be in the pack
+    template/fonts/OFL.txt                     Poppins licence (SIL Open Font License)
+    fixtures/                                  a fictional client, "Sample Trail Run"
+```
+
 Not yet supported: the Claude and ChatGPT chat apps (they need OAuth, which the platform does not have).

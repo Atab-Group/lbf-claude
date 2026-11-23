@@ -1,0 +1,16 @@
+{
+  "name": "lbf-reports",
+  "version": "1.0.0",
+  "description": "Build a Let's Be Frank client's monthly social media report as a PDF from the platform's report pack.",
+  "author": { "name": "Atab" },
+  "homepage": "https://lbf-reporting-platform.vercel.app",
+  "skills": "./skills/",
+  "mcpServers": "./codex.mcp.json",
+  "interface": {
+    "displayName": "LBF Monthly Reports",
+    "shortDescription": "Let's Be Frank monthly report PDFs",
+    "developerName": "Atab",
+    "category": "Productivity",
+    "defaultPrompt": ["Build the monthly report for a client"]
+  }
+}

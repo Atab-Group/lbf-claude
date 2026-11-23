@@ -1,0 +1,19 @@
+{
+  "$schema": "https://anthropic.com/claude-code/plugin.schema.json",
+  "name": "lbf-reports",
+  "displayName": "LBF Monthly Reports",
+  "description": "Build a Let's Be Frank client's monthly social media report as a PDF, from the platform's report pack and the account manager's Meta screenshots.",
+  "author": { "name": "Atab" },
+  "homepage": "https://lbf-reporting-platform.vercel.app",
+  "repository": "https://github.com/Atab-Group/lbf-claude",
+  "keywords": ["lbf", "reporting", "social-media", "monthly-report"],
+  "userConfig": {
+    "api_key": {
+      "type": "string",
+      "title": "LBF platform key",
+      "description": "Your personal key from the platform: My settings, Connect your Claude. It starts with lbf_.",
+      "sensitive": true,
+      "required": true
+    }
+  }
+}

@@ -7,6 +7,11 @@
       "name": "lbf",
       "source": "./plugins/lbf",
       "description": "Drive the Let's Be Frank reporting platform from Claude Code: client data, reports, tasks and the content planner."
+    },
+    {
+      "name": "lbf-reports",
+      "source": "./plugins/lbf-reports",
+      "description": "Build a Let's Be Frank client's monthly social media report as a PDF, from the platform's report pack and the account manager's Meta screenshots."
     }
   ]
 }
