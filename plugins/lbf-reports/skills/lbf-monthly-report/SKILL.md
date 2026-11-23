@@ -60,6 +60,9 @@ block, and the synced figures stay.
 2. **Ask the account manager only about a figure you are unsure of**: one that is cut off, blurred, or
    shown only rounded ("55.6K" with no full number). Ask once, for all of them together. Every other
    figure is saved straight away, with no confirm step.
+   - **Reach is the exception.** Meta prints reach only rounded ("11.1K") on these cards, every month.
+     Never ask about it and never save it: the synced reach stays in the report. Do not list it as left
+     out.
    - With nobody to ask (an unattended run), leave an unsure figure out. The synced figure stays in
      the report. Name the figure you left out in the final message.
 3. Where the surface can upload a file, send each screenshot with `create_upload` (kind `screenshot`,
@@ -74,10 +77,15 @@ block, and the synced figures stay.
    ```
    `changes` are the signed percent printed beside each figure. A change needs its figure: never send a
    change alone.
-5. Compare each saved figure with the synced figure of the same key from step 1. **The screenshot
-   figure is the one the report prints.** Note every pair that differs by more than 10% for the final
-   message. If step 1's figure was already from a screenshot (saved earlier), there is no synced figure
-   to compare: say so.
+5. Read the comparison in the `save_screenshot_figures` result: it compares each saved figure with the
+   synced figure of the same key. Use it, not step 1's pack: when screenshot figures were saved earlier
+   in the month, the pack already shows those. **The screenshot figure is the one the report prints.**
+   Note every pair that differs by more than 10% for the final message.
+   - A screenshot figure two or more times the synced one (interactions often are) is a gap in our
+     synced data, not in the screenshot. Name it in the final message as a data question for the
+     platform team. Never mention it in the report's copy.
+6. Screenshot figures already saved for this month are replaced by your save. Always save from the
+   screenshots you were given.
 
 ### 3. Competitors
 
@@ -90,6 +98,7 @@ Call `save_competitor_followers` with
 `followers` is a whole number. **When the profile shows the count only rounded ("38K"), save
 `followers: 38000` with `rounded: true`.** It prints as "~38K", and its "vs last month" shows a dash,
 because only exact counts are compared. Do not ask the account manager for an exact count.
+Counts already saved for this month are replaced by your save: always read each profile again and save.
 
 ### 4. Key dates
 
@@ -106,7 +115,8 @@ Write the copy for every page in `pack.pages` except `cover` (rules below; the s
 
 ### 6. Render
 
-1. Call `render_report` with `{clientRef, month, copy}`. Poll `get_job` until `done`.
+1. Call `render_report` with `{clientRef, month, copy}`. Poll `get_job` until `done`. A render takes
+   about one minute: wait about 20 seconds between checks.
 2. `result.rendered` false with `result.problems`: each problem names the page and what is wrong (an
    unknown ref or placeholder, a missing takeaway, a number typed by hand, a page that ran over). Fix
    **all** of them in the copy and call `render_report` again.
@@ -115,6 +125,10 @@ Write the copy for every page in `pack.pages` except `cover` (rules below; the s
    means the deck changed while yours was being saved: call `render_report` once more.
 4. `result.rendered` true: `pdfUrl` (works for 7 days), `pages`, `revision`, `warnings`. A warning that
    a page was shrunk to fit means its copy is long: shorten it and render again.
+5. The job's `status` is `failed` (no `result`): the platform could not print, a server fault. Do not
+   retry it and do not build the PDF yourself. Tell the account manager the render failed on the
+   platform, quote the job's `error`, and put your whole `copy` JSON at the end of the final message so
+   the next run can send it unchanged.
 
 Every render is saved as a new revision of the month's report in the app. Earlier revisions are kept.
 
@@ -164,6 +178,10 @@ Every figure in your text goes in as a placeholder that names a key in `pack.fig
 
 A takeaway with any digit outside a placeholder is refused. In every other line (`why`, `how`, blocks),
 any printed number the pack does not hold is refused too. No hand-typed figures anywhere.
+
+Calendar dates are not figures: "1 December", "December 23rd", "6 Dec 2026" and "November 2026" may be
+typed in any line except a takeaway. A bare number beside a date ("23 December, 40 places left") is
+still refused.
 
 ### Copy rules
 
